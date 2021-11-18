@@ -1,3 +1,16 @@
+// ♥ SOPHIA ♥ start
+//declarando variaveis para guardar fora das funções os valores que serão enviados
+
+//para o objeto a postar:
+    let quizzTitle = '';
+    let quizzImgURL = '';
+    let questions = [];
+        let answers = [];
+    let levels = [];
+
+// ♥ SOPHIA ♥ end
+
+
 // Passar para a página seguinte
 // Dina fez isso em uma aula do acelera aí
 function nextPage(classPageA, classPageB){
@@ -43,16 +56,18 @@ function verifyURL(url){
 
 // ♥ SOPHIA ♥ start
 
-//NIVEIS
-    //titulo do nivel (max 10 char)
-    //taxa de acerto minima
-        //pelo menos um nivel com taxa de acerto minima de 0%
-    //URL da imagem do nivel
-    //descrição do nivel
+//ARMAZENAR QUIZZES DO USUÁRIO (POST)
+    //armazenar objeto
+function storeQuizz(){
+    //axios post
+}
 
-    //exibir alerta caso qualquer validação falhe.
+function listQuizzes(){
+    //get quizzes from axios
+}
 
-//ENVIAR DADOS (POST)
-
+function renderQuizz(img,title){
+    //onclick directs user to that quizz
+}
 
 // ♥ SOPHIA ♥ end
