@@ -40,3 +40,19 @@ function verifyURL(url){
     if (re.test(term)) return true;
     else return false;
 }
+
+// ♥ SOPHIA ♥ start
+
+//NIVEIS
+    //titulo do nivel (max 10 char)
+    //taxa de acerto minima
+        //pelo menos um nivel com taxa de acerto minima de 0%
+    //URL da imagem do nivel
+    //descrição do nivel
+
+    //exibir alerta caso qualquer validação falhe.
+
+//ENVIAR DADOS (POST)
+
+
+// ♥ SOPHIA ♥ end

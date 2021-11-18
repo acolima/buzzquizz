@@ -159,3 +159,8 @@ main {
 .hide {
     display: none;
 }
+
+.quizz-levels div{
+    display: flex;
+    flex-direction: column;
+}
