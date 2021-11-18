@@ -3,22 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <meta name="viewport" content="width=1, initial-scale=1.0">
     <title>BuzzQuizz</title>
 
-    <link rel="stylesheet" href="src/reset.css">
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/css/reset.css" />
+    <link rel="stylesheet" href="src/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"/>
 </head>
 <body>
-    <header>BuzzQuizz</header>
+    <header>
+        <p>BuzzQuizz</p>
+    </header>
 
     <main class="home">
-    <div class="create-quizz">
-        <p>Você não criou nenhum quizz ainda :(</p>
-        <button>Criar Quizz</button>
-    </div>
+        <!--Tela 1 Lista de Quizes-->
+        <div class="create-quizz">
+            <p>Você não criou nenhum <br> quizz ainda :(</p>
+            <button class="btn-create-quizz" onclick="nextPage('.create-quizz', '.quizz-info')">
+                <p>Criar Quizz</p>
+            </button>
+        </div>
+
+        <!--Tela 3.1 Info Básica do Quiz-->
+        <div class="quizz-info hide">
+            <p>Comece pelo começo</p>
+            <div>
+              <input class="quizz-input quizz-title" type="text" placeholder="Título do seu quizz"/>
+              <input class="quizz-input quizz-url" type="text" placeholder="URL da imagem do seu quizz"/>
+              <input class="quizz-input quizz-num-questions" type="text" placeholder="Quantidade de perguntas do quizz"/>
+              <input class="quizz-input quizz-num-levels" type="text" placeholder="Quantidade de níveis do quizz"/>
+            </div>
+            <button class="btn-create-questions" onclick="verifyQuizzInfo('.quizz-info', '.quizz-questions')">
+              <p>Prosseguir para criar perguntas</p>
+            </button>
+        </div>
+
+        <!--Tela 3.2 Perguntas do Quiz-->
+        <div class="quizz-questions hide"></div>
+
+        <!--Tela 3.3 Níveis do Quiz-->
+        <div class="quizz-levels hide"></div>
+
+        <!--Tela 3.4 Sucesso do Quiz-->
+        <div class="quizz-sucess hide"></div>
     </main>
 
-    
+    <script src="src/scripts.js"></script>
 </body>
 </html>

@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+}
+
+input,
+button {
+  all: unset;
+  box-sizing: border-box;
+}
+
+body{
+    font-family: "Roboto", sans-serif;
+    background-color: #fafafa;
+}
+
+header {
+    width: 100%;
+    height: 69px;
+    background: #EC362D;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+header p {
+    color: #fff;
+    font-size: 37px;
+    font-weight: 700;
+    line-height: 43px;
+    text-align: center;
+  
+    padding-top: 13px;
+}
+
+main {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    margin-top: 146px;
+}
+
+/* Tela 1 */
+.create-quizz {
+    border: 1px dashed #D4D4D4;
+
+    height: 181px;
+    width: 1051px;
+
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.create-quizz > p {
+    color: #B9B9B9;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23px;
+    text-align: center;
+
+    padding-top: 30px;
+}
+
+.btn-create-quizz{
+    height: 40px;
+    width: 151px;
+
+    border-radius: 50px;
+    border: 1px dashed #EC362D;
+
+    cursor: pointer;
+}
+
+.btn-create-quizz{
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+    text-align: center;
+    color: #ec362d;
+}
+
+/* Tela 3.1 */
+.quizz-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 27px;
+}
+
+.quizz-info p{
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.quizz-info div {
+    width: 600px;
+    height: 256px;
+  
+    background-color: #fff;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 58px;
+}
+
+.quizz-input {
+    background-color: #fff;
+  
+    width: 564px;
+    height: 46px;
+  
+    margin: 0 auto;
+    border-radius: 5px;
+    border: 1px solid #d1d1d1;
+  
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 22px;
+    color: #bababa;
+  
+    padding-left: 14px;
+}/* Cria todos os inputs com esse classe, eles são iguais*/
+  
+.quizz-info input:first-child {
+    margin-top: 21px;
+}
+  
+.btn-create-questions {
+    height: 54px;
+    width: 368px;
+  
+    border-radius: 15px;
+  
+    background-color: #ec362d;
+  
+    cursor: pointer;
+}
+  
+.btn-create-questions p {
+    color: #fff;
+  
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: center;
+}
+
+.hide {
+    display: none;
+}
