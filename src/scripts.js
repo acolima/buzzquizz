@@ -13,21 +13,21 @@ function verifyQuizzInfo(classPageA, classPageB){
     const inputURL = document.querySelector(".quizz-url").value;
     const inputNumberOfQuestions = document.querySelector(".quizz-num-questions").value;
     const inputNumberOfLevels = document.querySelector(".quizz-num-levels").value;
-    let n = 0;
+    let control = 0;
 
     if(inputTitle.length < 20 || inputTitle.length > 65){
         alert("Título do Quizz deve ter entre 20 e 65 caracteres");   
-    } else n++;
+    } else control++;
     if(inputURL){
 
-    }else n++;
+    }else control++;
     if(inputNumberOfQuestions < 3 ){
         alert("São necessárias no mínimo 3 perguntas");   
-    }else n++;
+    }else control++;
     if(inputNumberOfLevels < 2){
         alert("São necessários no mínimo 2 níveis");   
-    }else n++;
+    }else control++;
 
-    if(n === 4) 
+    if(control === 4) 
         nextPage(classPageA, classPageB);
 }
