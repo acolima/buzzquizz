@@ -97,7 +97,8 @@ main {
 }
 
 .quizz-info > p, 
-.quizz-questions > p{
+.quizz-questions > p, 
+.quizz-levels > p{
     font-size: 23px;
     font-weight: 700;
     color: #000;
@@ -139,7 +140,8 @@ main {
 
 /* Botões */
 .btn-verify-info,
-.btn-verify-question {
+.btn-verify-question,
+.btn-verify-levels {
     height: 54px;
     width: 368px;
   
@@ -151,7 +153,8 @@ main {
 }
   
 .btn-verify-info p, 
-.btn-verify-question p {
+.btn-verify-question p,
+.btn-verify-levels p {
     color: #fff;
   
     font-size: 18px;
@@ -165,20 +168,21 @@ main {
     gap: 36px;
 }
 
-.questions{
+.question{
     width: 600px;
-    /*height: 825px;*/
+    height: 825px;
     
     background-color: #fff;
-}
 
-.question{
     display: flex;
     flex-direction: column;
     gap: 14px;
+
+    margin-bottom: 10px; /* A DEFINIR */
 }
 
-.question p{
+.question p,
+.level p{
     font-size: 20px;
     font-weight: 700;
     color: #000;
@@ -191,6 +195,7 @@ main {
     flex-direction: column;
     gap: 32px;
 }
+
 .incorrect-answers div {
     display: flex;
     flex-direction: column;
@@ -201,10 +206,24 @@ main {
     display: none;
 }
 
-.quizz-levels div{
+.quizz-levels{
+    gap: 43px;
+}
+
+.level{
+    width: 600px;
+    height: 312px;
+    background-color: #fff;
+
     display: flex;
     flex-direction: column;
+    gap: 14px;
+
+    margin-bottom: 10px; /* A DEFINIR*/
 }
+
+
+
 
 .all-quizzes {
     width: 100%;

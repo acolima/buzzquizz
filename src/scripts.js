@@ -5,9 +5,9 @@ let numberOfLevels = 0;
 //declarando variaveis para guardar fora das funções os valores que serão enviados
 
 //para o objeto a postar:
-    let quizzInfo = {}; // Array com as informações do quiz
-    let questionsArray = []; // Array com as perguntas
-    let levels = []; 
+let quizzInfo = {}; // Array com as informações do quiz
+let questionsArray = []; // Array com as perguntas
+let levelsArray = []; 
 
 // ♥ SOPHIA ♥ end
 
@@ -113,10 +113,19 @@ function verifyQuestions(classPageA, classPageB){
 
     for (let i = 0; i < questions.length; i++) {
         const question = questions[i];
-        if(verifyQuestion(question)) count++; 
+        if(verifyQuestion(question)){
+            questionsArray.push(objectQuestion);
+            count++; 
+        }
     }
-    if(count === questions.length) nextPage(classPageA, classPageB);
+
+    if(count === questions.length){
+        nextPage(classPageA, classPageB);
+        createLevels();
+    }
 }
+
+let objectQuestion = {};
 
 function verifyQuestion(question) {   
     const questionTitle = question.querySelector(".question-title").value;
@@ -127,7 +136,6 @@ function verifyQuestion(question) {
     let numberOfIncorretAnswers = 0;
     let incorrectAnswersArray = [];
     let answersArray = [];
-    let objectQuestion = {};
     let objectAnswer = {};
     let control = false;
 
@@ -154,11 +162,7 @@ function verifyQuestion(question) {
         }
     );
 
-    questionsArray.push({
-        title: questionTitle,
-        color: questionColor,
-        answers: answersArray
-    });
+    console.log(objectQuestion)
 
     if((questionTitle.length < 20) ||
         (!verifyHexadecimal(questionColor)) ||
@@ -166,10 +170,82 @@ function verifyQuestion(question) {
         (!verifyURL(correctAnswerImg)) ||
         (numberOfIncorretAnswers === 0))
             alert("Digite as informações corretamente");
-    else control = true;
+    else{
+        objectQuestion = {
+            title: questionTitle,
+            color: questionColor,
+            answers: answersArray
+        };
+        control = true;
+    }
     return control;
 }
 
+function createLevels() {
+    const levelsDiv = document.querySelector(".levels");
+
+    for (let i = 0; i < numberOfLevels; i++) {
+        levelsDiv.innerHTML +=`
+            <div class="level">
+                <p>Nível ${i+1}</p>
+                <input class="quizz-input level-title" type="text" placeholder="Título do nível">
+                <input class="quizz-input level-percentage" type="number" placeholder="% de acerto mínima">
+                <input class="quizz-input level-url" type="text" placeholder="URL da imagem do nível" >
+                <input class="quizz-input level-description" type="text" placeholder="Descrição do nível" >
+            </div>
+        `;
+    }
+}
+
+let isPercentageZero = 0;
+let objectLevel = {};
+
+function verifyLevels(classPageA, classPageB) {
+    const levels = document.querySelectorAll(".level");   
+    let count = 0;
+
+    for (let i = 0; i < levels.length ; i++) {
+        const level = levels[i];
+        if(verifyLevel(level)){
+            levelsArray.push(objectLevel);
+            count++;
+        }
+    }
+    
+    if(count === levels.length){
+        console.log("entrou")
+        nextPage(classPageA, classPageB);
+    }
+}
+
+function verifyLevel(level) {
+    const levelTitle = level.querySelector(".level-title").value;
+    const levelPercentage = parseInt(level.querySelector(".level-percentage").value);
+    const levelUrl = level.querySelector(".level-url").value;    
+    const levelDescription = level.querySelector(".level-description").value;    
+    let control = false;
+    
+    if(levelPercentage === 0){
+        isPercentageZero++;
+    }
+
+    if((levelTitle.length < 10) || 
+        (levelPercentage < 0 || levelPercentage > 100) || 
+        (!verifyURL(levelUrl)) || 
+        (levelDescription.length < 30) || 
+        (isPercentageZero === 0))
+            alert("Digite as informações corretamente");
+    else{
+        objectLevel = {
+            title: levelTitle,
+            image: levelUrl,
+            text: levelDescription,
+            minValue: levelPercentage
+        }
+        control = true;
+    }
+    return control;
+}
 
 // ♥ SOPHIA ♥ start
 
