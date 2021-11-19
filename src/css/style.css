@@ -2,6 +2,12 @@
     box-sizing: border-box;
 }
 
+.flex-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 input,
 button {
   all: unset;
@@ -36,10 +42,6 @@ header p {
 main {
     width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
     margin-top: 146px;
 }
 
@@ -52,9 +54,6 @@ main {
 
     border-radius: 5px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 25px;
 }
 
@@ -88,15 +87,14 @@ main {
 
 /* Tela 3.1 */
 .quizz-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 27px;
 }
 
-.quizz-info p{
+.quizz-info > p, 
+.quizz-questions > p{
     font-size: 23px;
     font-weight: 700;
+    color: #000;
 }
 
 .quizz-info div {
@@ -105,9 +103,6 @@ main {
   
     background-color: #fff;
     
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 9px;
 
     margin-bottom: 58px;
@@ -135,8 +130,10 @@ main {
 .quizz-info input:first-child {
     margin-top: 21px;
 }
-  
-.btn-create-questions {
+
+/* Botões */
+.btn-verify-info,
+.btn-verify-question {
     height: 54px;
     width: 368px;
   
@@ -147,13 +144,51 @@ main {
     cursor: pointer;
 }
   
-.btn-create-questions p {
+.btn-verify-info p, 
+.btn-verify-question p {
     color: #fff;
   
     font-size: 18px;
     font-weight: 400;
     line-height: 21px;
     text-align: center;
+}
+
+/* Tela 3.2 */
+.quizz-questions{
+    gap: 36px;
+}
+
+.questions{
+    width: 600px;
+    /*height: 825px;*/
+    
+    background-color: #fff;
+}
+
+.question{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.question p{
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+
+    margin: 18px 0 10px 17px;
+}
+
+.incorrect-answers{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.incorrect-answers div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .hide {
