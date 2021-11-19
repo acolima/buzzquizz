@@ -17,13 +17,32 @@
         <p>BuzzQuizz</p>
     </header>
 
-    <main class="home flex-center">
-        <!--Tela 1 Lista de Quizes-->
-        <div class="create-quizz flex-center">
-            <p>Você não criou nenhum <br> quizz ainda :(</p>
-            <button class="btn-create-quizz" onclick="nextPage('.create-quizz', '.quizz-info')">
-                <p>Criar Quizz</p>
-            </button>
+    <!--Tela 1 Lista de Quizes-->
+    <main >
+        <div class="home flex-center">
+            <div class="create-quizz flex-center">
+                <p>Você não criou nenhum <br> quizz ainda :(</p>
+                <button class="btn-create-quizz" onclick="nextPage('.home', '.quizz-info')">
+                    <p>Criar Quizz</p>
+                </button>
+            </div>
+            <div class="all-quizzes">
+                <p>Todos os Quizzes</p>
+                <span>
+                    <div class="quizz-preview">
+                        <p>texto texto texto</p>
+                    </div>
+                    <div class="quizz-preview">
+                        <p>texto texto texto</p>
+                    </div>
+                    <div class="quizz-preview">
+                        <p>texto texto texto</p>
+                    </div>   
+                    <div class="quizz-preview">
+                        <p>texto texto texto</p>
+                    </div>                    
+                </span>
+            </div>
         </div>
 
         <!--Tela 3.1 Info Básica do Quizz-->
@@ -50,8 +69,8 @@
         </div>
 
         <!--Tela 3.3 Níveis do Quizz-->
-        <div class="quizz-levels">
-            <!--<p>Agora, decida os níveis</p>
+        <!--<div class="quizz-levels">
+            <p>Agora, decida os níveis</p>
             <div>
                 <p>Nível 1</p>
                 <div id="level-1">
@@ -79,8 +98,8 @@
                     <input type="text" placeholder="Título do nível" class="level-description">
                 </div>
             </div>
-            <button>Finalizar Quizz</button>-->
-        </div>
+            <button>Finalizar Quizz</button>
+        </div>-->
         <!--Tela 3.4 Sucesso do Quizz-->
         <div class="quizz-success hide"></div>
     </main>

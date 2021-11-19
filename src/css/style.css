@@ -27,6 +27,8 @@ header {
     position: fixed;
     top: 0;
     left: 0;
+
+    box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.4);
 }
 
 header p {
@@ -43,6 +45,10 @@ main {
     width: 100%;
 
     margin-top: 146px;
+}
+
+.home > div{
+    width: 1051px;
 }
 
 /* Tela 1 */
@@ -198,4 +204,43 @@ main {
 .quizz-levels div{
     display: flex;
     flex-direction: column;
+}
+
+.all-quizzes {
+    width: 100%;
+    
+}
+.all-quizzes > p {
+    font-weight: 700;
+    font-size: 20px;
+    
+    margin-top: 77px;
+}
+span {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    margin: 6px 0; 
+}
+
+.quizz-preview {
+    display: flex;
+    align-items: flex-end;
+
+    width: 340px;
+    height: 181px;
+    border-radius: 5px;
+    background: 
+        linear-gradient(180deg, #FFFFFF00, #00000080, #000000),
+        url(/src/img/test.jpg);
+    background-size: cover;
+ 
+
+    font-size: 19px;
+    font-weight: 400;
+    color: #FFFFFF;
+
+    padding: 19px 20px;
+    margin: 6px 0;
 }
