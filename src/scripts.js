@@ -5,10 +5,14 @@ let numberOfLevels = 0;
 //declarando variaveis para guardar fora das funções os valores que serão enviados
 
 //para o objeto a postar:
-let quizzInfo = {}; // Array com as informações do quiz
-let questionsArray = []; // Array com as perguntas
-let levelsArray = []; 
 
+//colocar quizzes na tela
+    //quizzes do usuario
+    //todos os quizzes
+    getQuizzes();
+    let quizzInfo = {};         // Array com as informações do quiz (title e imagem)
+    let questionsArray = [];    // Array com as perguntas e as respostas
+    let levelsArray = [];       // Array com os níveis
 // ♥ SOPHIA ♥ end
 
 
@@ -126,7 +130,6 @@ function verifyQuestions(classPageA, classPageB){
 }
 
 let objectQuestion = {};
-
 function verifyQuestion(question) {   
     const questionTitle = question.querySelector(".question-title").value;
     const questionColor = question.querySelector(".question-color").value;
@@ -161,8 +164,6 @@ function verifyQuestion(question) {
         isCorrectAnswer: true
         }
     );
-
-    console.log(objectQuestion)
 
     if((questionTitle.length < 20) ||
         (!verifyHexadecimal(questionColor)) ||
@@ -199,7 +200,6 @@ function createLevels() {
 
 let isPercentageZero = 0;
 let objectLevel = {};
-
 function verifyLevels(classPageA, classPageB) {
     const levels = document.querySelectorAll(".level");   
     let count = 0;
@@ -213,7 +213,6 @@ function verifyLevels(classPageA, classPageB) {
     }
     
     if(count === levels.length){
-        console.log("entrou")
         nextPage(classPageA, classPageB);
     }
 }
@@ -250,16 +249,38 @@ function verifyLevel(level) {
 // ♥ SOPHIA ♥ start
 
 //ARMAZENAR QUIZZES DO USUÁRIO (POST)
-    //armazenar objeto
-function storeQuizz(){
+//armazenar objeto
+function storeQuizz() {
     //axios post
 }
 
-function listQuizzes(){
+function getQuizzes() {
     //get quizzes from axios
+    const pAllQuizzes = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
+    pAllQuizzes.then(processQuizzes)
 }
-
-function renderQuizz(img,title){
+function processQuizzes(response){
+    const quizzes = response.data;
+    const nQuizzes = quizzes.length;
+    //percorrer lista de quizzes e imprimir a preview de cada um
+    for(let i = 0; i < nQuizzes; i++){
+        const image = quizzes[i].image;
+        const title = quizzes[i].title;
+        renderQuizz(image,title);
+    }
+    //pra quizzes do usuario, filtrar. mas isso é um problema pra sophia do futuro.
+}
+const span = document.querySelector('span');
+function renderQuizz(img, title) {
+    span.innerHTML +=
+    `
+    <div class="quizz-preview">
+        <img src="${img}" alt="imagem teste">
+        <p>${title}</p>
+    </div>
+    `;
+    //!!! falta o link para o quizz!!!
+    
     //onclick directs user to that quizz
 }
 
