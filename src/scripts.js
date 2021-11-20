@@ -270,9 +270,10 @@ function processQuizzes(response){
     }
     //pra quizzes do usuario, filtrar. mas isso é um problema pra sophia do futuro.
 }
-const span = document.querySelector('span');
+const span_all_quizzes = document.querySelector('.list-all-quizzes');
+const span_your_quizzes = document.querySelector('.list-your-quizzes');
 function renderQuizz(img, title) {
-    span.innerHTML +=
+    span_all_quizzes.innerHTML +=
     `
     <div class="quizz-preview">
         <img src="${img}" alt="imagem teste">

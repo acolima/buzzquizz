@@ -224,7 +224,28 @@ main {
 }
 
 
+.your-quizzes {
+    width: 100%;
+    
+}
 
+.your-quizzes > div {
+    display: flex;
+    align-items: center;
+
+    margin-top: 77px;
+}
+
+.your-quizzes p {
+    font-weight: 700;
+    font-size: 20px;
+    margin-right: 17px;
+}
+
+.your-quizzes .add-circle {
+    font-size: 30px;
+    color: #EC362D;
+}
 
 .all-quizzes {
     width: 100%;
