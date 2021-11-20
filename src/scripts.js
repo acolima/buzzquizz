@@ -23,6 +23,7 @@ function nextPage(classPageA, classPageB){
 
     pageA.classList.add("hide");
     pageB.classList.remove("hide");
+
 }
 
 // Verifica se a URL passada é válida
@@ -72,7 +73,6 @@ function verifyQuizzInfo(classPageA, classPageB){
         quizzTitle,
         quizzURL
     }
-    console.log(numberOfQuestions);
 
     if(control === 4){
         nextPage(classPageA, classPageB);
@@ -80,13 +80,21 @@ function verifyQuizzInfo(classPageA, classPageB){
     }
 }
 
+function editQuestion(edit, classSelector, classBehavior) {
+    const parentNodeEdit = edit.parentElement.parentElement;
+    const divEdit = parentNodeEdit.querySelector(classSelector);
+    divEdit.classList.toggle(classBehavior);
+    divEdit.classList.toggle("hide");
+}
+
 function createQuestions(){
     const questionsDiv = document.querySelector(".questions");
 
-    for (let i = 0; i < numberOfQuestions; i++) {
-       questionsDiv.innerHTML +=`
-            <div class="question">
-                <p>Pergunta ${i+1}</p>
+    /* Renderiza a primeira pergunta */
+    questionsDiv.innerHTML += `
+        <div class="question" style="height: 825px">
+            <p>Pergunta 1</p>
+            <div class="question-input" style="padding-top: 20px">
                 <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
                 <input class="quizz-input question-color" type="text" placeholder="Cor de fundo da pergunta"/>
                 <p>Resposta correta</p>
@@ -95,22 +103,65 @@ function createQuestions(){
                 <p>Respostas incorreta</p>
                 <div class="incorrect-answers">
                     <div>
-                        <input class="quizz-input incorrect-answer-text-1" type="text" placeholder="Resposta incorreta 1"/>
-                        <input class="quizz-input incorrect-answer-img-1" type="text" placeholder="URL da imagem 1"/>
+                        <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
+                        <input class="quizz-input" type="text" placeholder="URL da imagem 1"/>
                     </div>
                     <div>
-                        <input class="quizz-input incorrect-answer-text-2" type="text" placeholder="Resposta incorreta 2"/>
-                        <input class="quizz-input incorrect-answer-img-2" type="text" placeholder="URL da imagem 2"/>
+                        <input class="quizz-input" type="text" placeholder="Resposta incorreta 2"/>
+                        <input class="quizz-input" type="text" placeholder="URL da imagem 2"/>
                     </div>
                     <div>
-                        <input class="quizz-input incorrect-answer-text-3" type="text" placeholder="Resposta incorreta 3"/>
-                        <input class="quizz-input incorrect-answer-img-3" type="text" placeholder="URL da imagem 3"/>
+                        <input class="quizz-input" type="text" placeholder="Resposta incorreta 3"/>
+                        <input class="quizz-input" type="text" placeholder="URL da imagem 3"/>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        </div>
+    `;
+
+    for (let i = 2; i <= numberOfQuestions; i++) {
+        questionsDiv.innerHTML += `
+            <div class="question">
+                <div class="question-header">
+                    <p>Pergunta ${i}</p>
+                    <ion-icon name="create-outline" onclick="editQuestion(this, '.question-input', 'edit-question')"></ion-icon>
+                </div>
+                <div class="question-input hide">
+                    <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
+                    <input class="quizz-input question-color" type="text" placeholder="Cor de fundo da pergunta"/>
+                    <p>Resposta correta</p>
+                    <input class="quizz-input correct-answer-text" type="text" placeholder="Resposta correta"/>
+                    <input class="quizz-input correct-answer-img" type="text" placeholder="URL da imagem"/>
+                    <p>Respostas incorreta</p>
+                    <div class="incorrect-answers">
+                        <div>
+                            <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
+                            <input class="quizz-input" type="text" placeholder="URL da imagem 1"/>
+                        </div>
+                        <div>
+                            <input class="quizz-input" type="text" placeholder="Resposta incorreta 2"/>
+                            <input class="quizz-input" type="text" placeholder="URL da imagem 2"/>
+                        </div>
+                        <div>
+                            <input class="quizz-input" type="text" placeholder="Resposta incorreta 3"/>
+                            <input class="quizz-input" type="text" placeholder="URL da imagem 3"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 }
 
+function correctArray(array, newArray, n) {
+    let i = array.length - n;
+    
+    for (i; i < array.length; i++) {
+        newArray.push(array[i]);
+    }
+}
+
+let questionsArrayCorrect = [];
 function verifyQuestions(classPageA, classPageB){
     const questions = document.querySelectorAll(".question");
     let count = 0;
@@ -118,13 +169,14 @@ function verifyQuestions(classPageA, classPageB){
     for (let i = 0; i < questions.length; i++) {
         const question = questions[i];
         if(verifyQuestion(question)){
-            questionsArray.push(objectQuestion);
+            questionsArrayCorrect.push(objectQuestion);
             count++; 
         }
     }
 
     if(count === questions.length){
         nextPage(classPageA, classPageB);
+        correctArray(questionsArrayCorrect, questionsArray, numberOfQuestions);
         createLevels();
     }
 }
@@ -194,14 +246,32 @@ function verifyQuestion(question) {
 function createLevels() {
     const levelsDiv = document.querySelector(".levels");
 
-    for (let i = 0; i < numberOfLevels; i++) {
-        levelsDiv.innerHTML +=`
-            <div class="level">
-                <p>Nível ${i+1}</p>
+    /* Renderiza o primeiro nível*/
+    levelsDiv.innerHTML += `
+        <div class="level" style="height: 316px">
+            <p>Nível 1</p>
+            <div class="level-input" style="padding-top: 15px">
                 <input class="quizz-input level-title" type="text" placeholder="Título do nível">
                 <input class="quizz-input level-percentage" type="number" placeholder="% de acerto mínima">
                 <input class="quizz-input level-url" type="text" placeholder="URL da imagem do nível" >
                 <input class="quizz-input level-description" type="text" placeholder="Descrição do nível" >
+            </div>
+        </div>
+    `;
+
+    for (let i = 2; i <= numberOfLevels; i++) {
+        levelsDiv.innerHTML += `
+            <div class="level">
+                <div class="level-header">
+                    <p>Nível ${i}</p>
+                    <ion-icon name="create-outline" onclick="editQuestion(this, '.level-input', 'edit-level')"></ion-icon>
+                </div>
+                <div class="level-input hide">
+                    <input class="quizz-input level-title" type="text" placeholder="Título do nível"/>
+                    <input class="quizz-input level-percentage" type="number" placeholder="% de acerto mínima"/>
+                    <input class="quizz-input level-url" type="text" placeholder="URL da imagem do nível"/>
+                    <input class="quizz-input level-description" type="text" placeholder="Descrição do nível"/>
+                </div>
             </div>
         `;
     }
@@ -209,6 +279,8 @@ function createLevels() {
 
 let isPercentageZero = 0;
 let objectLevel = {};
+let levelsArrayCorrect = [];
+
 function verifyLevels(classPageA, classPageB) {
     const levels = document.querySelectorAll(".level");   
     let count = 0;
@@ -216,13 +288,14 @@ function verifyLevels(classPageA, classPageB) {
     for (let i = 0; i < levels.length ; i++) {
         const level = levels[i];
         if(verifyLevel(level)){
-            levelsArray.push(objectLevel);
+            levelsArrayCorrect.push(objectLevel);
             count++;
         }
     }
     
     if(count === levels.length){
         nextPage(classPageA, classPageB);
+        correctArray(levelsArrayCorrect, levelsArray, numberOfLevels);
     }
 }
 

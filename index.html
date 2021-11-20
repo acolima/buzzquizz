@@ -17,8 +17,8 @@
         <p>BuzzQuizz</p>
     </header>
 
-    <!--Tela 1 Lista de Quizes-->
     <main >
+        <!--Tela 1 Lista de Quizes-->
         <div class="home flex-center">
             <div class="create-quizz flex-center">
                 <p>Você não criou nenhum <br> quizz ainda :(</p>
@@ -56,7 +56,7 @@
         <!--Tela 3.2 Perguntas do Quizz-->
         <div class="quizz-questions flex-center hide">
             <p>Crie suas perguntas</p>
-            <div class="questions"></div>
+            <div class="questions flex-center"></div>
             <button class="btn-verify-question" onclick="verifyQuestions('.quizz-questions', '.quizz-levels')">
                 <p>Prosseguir para criar níveis</p>
             </button>
@@ -65,7 +65,7 @@
         <!--Tela 3.3 Níveis do Quizz-->
         <div class="quizz-levels flex-center hide">
             <p>Agora, decida os níveis</p>
-            <div class="levels"></div>
+            <div class="levels flex-center"></div>
             <button class="btn-verify-levels" onclick="verifyLevels('.quizz-levels', '.quizz-success')">
                 <p>Finalizar Quizz</p>
             </button>
@@ -76,6 +76,7 @@
     </main>
 
     <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="src/scripts.js"></script>
 </body>
