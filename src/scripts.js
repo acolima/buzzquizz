@@ -164,13 +164,22 @@ function verifyQuestion(question) {
         isCorrectAnswer: true
         }
     );
-
-    if((questionTitle.length < 20) ||
-        (!verifyHexadecimal(questionColor)) ||
-        (correctAnswerText === "") ||
-        (!verifyURL(correctAnswerImg)) ||
-        (numberOfIncorretAnswers === 0))
-            alert("Digite as informações corretamente");
+    
+    if(questionTitle.length < 20){
+        alert("Pergunta deve conter no mínimo 20 caracteres");
+    }
+    else if(!verifyHexadecimal(questionColor)){
+        alert("A cor deve ser escrita em formato hexadecimal");
+    }
+    else if(correctAnswerText === ""){
+        alert("Preencha o campo da Resposta Correta");
+    }
+    else if(!verifyURL(correctAnswerImg)){
+        alert("Url inválida");
+    }
+    else if(numberOfIncorretAnswers === 0){
+        alert("Preencha o campo das respostas incorretas");
+    }
     else{
         objectQuestion = {
             title: questionTitle,
@@ -228,12 +237,21 @@ function verifyLevel(level) {
         isPercentageZero++;
     }
 
-    if((levelTitle.length < 10) || 
-        (levelPercentage < 0 || levelPercentage > 100) || 
-        (!verifyURL(levelUrl)) || 
-        (levelDescription.length < 30) || 
-        (isPercentageZero === 0))
-            alert("Digite as informações corretamente");
+    if(levelTitle.length < 10){
+        alert("O título da pergunta deve ter, no mínimo, 10 caracteres");
+    }
+    else if(levelPercentage < 0 || levelPercentage > 100){
+        alert("Porcentagem com número inválido");
+    }
+    else if(!verifyURL(levelUrl)){
+        alert("Digite uma URL válida");
+    }
+    else if(levelDescription.length < 30){
+        alert("Descrição do nível deve conter, no mínimo, 30 caracteres");
+    }
+    else if(isPercentageZero === 0){
+        alert("Deve haver uma porcentagem com 0(zero)");
+    }
     else{
         objectLevel = {
             title: levelTitle,

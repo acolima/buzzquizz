@@ -17,6 +17,8 @@ button {
 body{
     font-family: "Roboto", sans-serif;
     background-color: #fafafa;
+
+    padding-bottom: 50px;
 }
 
 header {
