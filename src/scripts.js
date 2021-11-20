@@ -132,7 +132,7 @@ function verifyQuestion(question) {
     const correctAnswerText = question.querySelector(".correct-answer-text").value;
     const correctAnswerImg = question.querySelector(".correct-answer-img").value;
     const incorrectAnswers = question.querySelector(".incorrect-answers");
-    let numberOfIncorretAnswers = 0;
+    let numberOfIncorrectAnswers = 0;
     let incorrectAnswersArray = [];
     let answersArray = [];
     let objectQuestion = {};
@@ -148,11 +148,11 @@ function verifyQuestion(question) {
                 isCorrectAnswer: false
             };
             incorrectAnswersArray.push(objectAnswer);
-            numberOfIncorretAnswers++;
+            numberOfIncorrectAnswers++;
         }
     }
 
-    for (let i = 0; i < numberOfIncorretAnswers; i++)
+    for (let i = 0; i < numberOfIncorrectAnswers; i++)
         answersArray.push(incorrectAnswersArray[i]);
 
     answersArray.push({
@@ -172,7 +172,7 @@ function verifyQuestion(question) {
         (!verifyHexadecimal(questionColor)) ||
         (correctAnswerText === "") ||
         (!verifyURL(correctAnswerImg)) ||
-        (numberOfIncorretAnswers === 0))
+        (numberOfIncorrectAnswers === 0))
             alert("Digite as informações corretamente");
     else control = true;
     return control;
@@ -199,22 +199,92 @@ function processQuizzes(response){
     for(let i = 0; i < nQuizzes; i++){
         const image = quizzes[i].image;
         const title = quizzes[i].title;
-        renderQuizz(image,title);
+        const id = quizzes[i].id;
+        renderQuizz(image, title, id);
     }
     //pra quizzes do usuario, filtrar. mas isso é um problema pra sophia do futuro.
 }
 const span = document.querySelector('span');
-function renderQuizz(img, title) {
+function renderQuizz(img, title, id) {
     span.innerHTML +=
     `
-    <div class="quizz-preview">
-        <img src="${img}" alt="imagem teste">
+    <div class="quizz-preview" id="${id}" onclick="takeThisQuizz(this)">
+        <img src="${img}" alt="quizz preview">
         <p>${title}</p>
     </div>
     `;
-    //!!! falta o link para o quizz!!!
     
     //onclick directs user to that quizz
+}
+
+function takeThisQuizz(quizz) {
+    const thisQuizzID = quizz.id;
+    //get the id of the specific quizz
+        //(stored as id in the div holding the preview)
+    //axios.get that biassh
+    const pQuizz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${thisQuizzID}`);
+    pQuizz.then(renderThisQuizz);
+
+    //hide home, show quizz page
+    document.querySelector(".home").classList.add("hide");
+    document.querySelector(".quizz-page").classList.remove("hide");
+}
+
+function renderThisQuizz(response) {
+    let quizz = response.data;
+    let questions = quizz.questions;
+    let nQuestions = questions.length;
+    let title = quizz.title;
+    let imageURL = quizz.image;
+    console.log(imageURL);
+
+    //render banner
+    document.querySelector("body").innerHTML += 
+    `
+        <div class="banner">
+            <p>${title}</p>
+        </div>
+    `;
+
+    document.querySelector(".banner").style.background = `"url('${imageURL}')"`;
+    document.querySelector(".banner p").innerHTML = `${title}`;
+    //render questions
+    for(let i = 0; i < nQuestions; i++){
+        let questionTitle = questions[i].title;
+        let questionColor = questions[i].color;
+
+        document.querySelector(".quizz-page-questions-box").innerHTML += 
+        `
+        <div class="quizz-page-question">
+        <div>
+            <p class="question-title">${questionTitle}</p>
+            <div class="quizz-page-answers-box spawn"></div>
+        </div>
+    </div>
+        `;
+        document.querySelector(".question-title").style.backgroundColor = `'${questionColor}'`
+        //render answers for each question
+        for(let j = 0; j < questions[i].answers.length; j++) {
+            let answerText = questions[i].answers[j].text;
+            let answerImageURL = questions[i].answers[j].image;
+            let correctAnswer = questions[i].answers[j].isCorrectAnswer;
+            //the info on the correct answer is stored in the img's class.
+            //SARAH, cheque aqui quando for fazer o comportamento das perguntas
+            
+            document.querySelector(".spawn").innerHTML += 
+            `
+            <div class="quizz-page-answer">
+                <img src='${answerImageURL}' alt="" class="${correctAnswer}">
+                <p><strong>${answerText}</strong></p>
+            </div>
+            `;
+
+            //remove class spawn on the last question
+            if(j == questions[i].answers.length - 1){
+                document.querySelector(".spawn").classList.remove("spawn");
+            }
+        }
+    }
 }
 
 // ♥ SOPHIA ♥ end
