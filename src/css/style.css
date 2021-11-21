@@ -17,6 +17,8 @@ button {
 body{
     font-family: "Roboto", sans-serif;
     background-color: #fafafa;
+
+    padding-bottom: 50px;
 }
 
 header {
@@ -85,7 +87,7 @@ main {
     cursor: pointer;
 }
 
-.btn-create-quizz{
+.btn-create-quizz p{
     font-size: 21px;
     font-weight: 400;
     line-height: 25px;
@@ -99,7 +101,8 @@ main {
 }
 
 .quizz-info > p, 
-.quizz-questions > p{
+.quizz-questions > p, 
+.quizz-levels > p{
     font-size: 23px;
     font-weight: 700;
     color: #000;
@@ -133,7 +136,7 @@ main {
     color: #bababa;
   
     padding-left: 14px;
-}/* Cria todos os inputs com esse classe, eles são iguais*/
+}
   
 .quizz-info input:first-child {
     margin-top: 21px;
@@ -141,7 +144,8 @@ main {
 
 /* Botões */
 .btn-verify-info,
-.btn-verify-question {
+.btn-verify-question,
+.btn-verify-levels {
     height: 54px;
     width: 368px;
   
@@ -153,7 +157,8 @@ main {
 }
   
 .btn-verify-info p, 
-.btn-verify-question p {
+.btn-verify-question p,
+.btn-verify-levels p {
     color: #fff;
   
     font-size: 18px;
@@ -168,24 +173,13 @@ main {
 }
 
 .questions{
-    width: 600px;
-    /*height: 825px;*/
-    
-    background-color: #fff;
+    gap: 20px;
 }
 
 .question{
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.question p{
-    font-size: 20px;
-    font-weight: 700;
-    color: #000;
-
-    margin: 18px 0 10px 17px;
+    width: 601px;
+    
+    background-color: #fff;
 }
 
 .incorrect-answers{
@@ -193,31 +187,109 @@ main {
     flex-direction: column;
     gap: 32px;
 }
+
 .incorrect-answers div {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+.edit-question {
+    height: 761px;
+}
+
+.question p,
+.level p{
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+
+    padding: 18px 0 10px 17px;
+}
+
+/* Tela 3.3 */
+.quizz-levels{
+    gap: 43px;
+}
+
+.levels{
+    gap: 20px;
+}
+
+.level{
+    width: 600px;
+
+    background-color: #fff;
+}
+
+.edit-level {
+    height: 242px;
+}
+
+ion-icon {
+    width: 26px;
+    height: 23px;
+  
+    cursor: pointer;
+  
+    padding-right: 24px;
+}
+
+.question-header,
+.level-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 74px;
+}
+
+.question-input,
+.level-input {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .hide {
     display: none;
 }
 
-.quizz-levels div{
+.your-quizzes {
+    width: 100%;
+    
+}
+
+.your-quizzes > div {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+
+    margin-top: 77px;
+}
+
+.your-quizzes p {
+    font-weight: 700;
+    font-size: 20px;
+    margin-right: 17px;
+}
+
+.your-quizzes .add-circle {
+    font-size: 30px;
+    color: #EC362D;
 }
 
 .all-quizzes {
     width: 100%;
     
 }
+
 .all-quizzes > p {
     font-weight: 700;
     font-size: 20px;
     
     margin-top: 77px;
 }
+
 span {
     display: flex;
     justify-content: space-between;

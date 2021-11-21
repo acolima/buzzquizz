@@ -5,18 +5,14 @@ let numberOfLevels = 0;
 //declarando variaveis para guardar fora das funções os valores que serão enviados
 
 //para o objeto a postar:
-let quizzTitle = '';
-let quizzImgURL = '';
-let answers = [];
 
 //colocar quizzes na tela
     //quizzes do usuario
     //todos os quizzes
     getQuizzes();
-    let quizzInfo = {}; // Array com as informações do quiz
-    let questionsArray = []; // Array com as perguntas
-    let levels = []; 
-
+    let quizzInfo = {};         // Array com as informações do quiz (title e imagem)
+    let questionsArray = [];    // Array com as perguntas e as respostas
+    let levelsArray = [];       // Array com os níveis
 // ♥ SOPHIA ♥ end
 
 
@@ -27,6 +23,7 @@ function nextPage(classPageA, classPageB){
 
     pageA.classList.add("hide");
     pageB.classList.remove("hide");
+
 }
 
 // Verifica se a URL passada é válida
@@ -76,7 +73,6 @@ function verifyQuizzInfo(classPageA, classPageB){
         quizzTitle,
         quizzURL
     }
-    console.log(numberOfQuestions);
 
     if(control === 4){
         nextPage(classPageA, classPageB);
@@ -84,13 +80,21 @@ function verifyQuizzInfo(classPageA, classPageB){
     }
 }
 
+function editQuestion(edit, classSelector, classBehavior) {
+    const parentNodeEdit = edit.parentElement.parentElement;
+    const divEdit = parentNodeEdit.querySelector(classSelector);
+    divEdit.classList.toggle(classBehavior);
+    divEdit.classList.toggle("hide");
+}
+
 function createQuestions(){
     const questionsDiv = document.querySelector(".questions");
 
-    for (let i = 0; i < numberOfQuestions; i++) {
-       questionsDiv.innerHTML +=`
-            <div class="question">
-                <p>Pergunta ${i+1}</p>
+    /* Renderiza a primeira pergunta */
+    questionsDiv.innerHTML += `
+        <div class="question" style="height: 825px">
+            <p>Pergunta 1</p>
+            <div class="question-input" style="padding-top: 20px">
                 <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
                 <input class="quizz-input question-color" type="text" placeholder="Cor de fundo da pergunta"/>
                 <p>Resposta correta</p>
@@ -99,33 +103,85 @@ function createQuestions(){
                 <p>Respostas incorreta</p>
                 <div class="incorrect-answers">
                     <div>
-                        <input class="quizz-input incorrect-answer-text-1" type="text" placeholder="Resposta incorreta 1"/>
-                        <input class="quizz-input incorrect-answer-img-1" type="text" placeholder="URL da imagem 1"/>
+                        <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
+                        <input class="quizz-input" type="text" placeholder="URL da imagem 1"/>
                     </div>
                     <div>
-                        <input class="quizz-input incorrect-answer-text-2" type="text" placeholder="Resposta incorreta 2"/>
-                        <input class="quizz-input incorrect-answer-img-2" type="text" placeholder="URL da imagem 2"/>
+                        <input class="quizz-input" type="text" placeholder="Resposta incorreta 2"/>
+                        <input class="quizz-input" type="text" placeholder="URL da imagem 2"/>
                     </div>
                     <div>
-                        <input class="quizz-input incorrect-answer-text-3" type="text" placeholder="Resposta incorreta 3"/>
-                        <input class="quizz-input incorrect-answer-img-3" type="text" placeholder="URL da imagem 3"/>
+                        <input class="quizz-input" type="text" placeholder="Resposta incorreta 3"/>
+                        <input class="quizz-input" type="text" placeholder="URL da imagem 3"/>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        </div>
+    `;
+
+    for (let i = 2; i <= numberOfQuestions; i++) {
+        questionsDiv.innerHTML += `
+            <div class="question">
+                <div class="question-header">
+                    <p>Pergunta ${i}</p>
+                    <ion-icon name="create-outline" onclick="editQuestion(this, '.question-input', 'edit-question')"></ion-icon>
+                </div>
+                <div class="question-input hide">
+                    <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
+                    <input class="quizz-input question-color" type="text" placeholder="Cor de fundo da pergunta"/>
+                    <p>Resposta correta</p>
+                    <input class="quizz-input correct-answer-text" type="text" placeholder="Resposta correta"/>
+                    <input class="quizz-input correct-answer-img" type="text" placeholder="URL da imagem"/>
+                    <p>Respostas incorreta</p>
+                    <div class="incorrect-answers">
+                        <div>
+                            <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
+                            <input class="quizz-input" type="text" placeholder="URL da imagem 1"/>
+                        </div>
+                        <div>
+                            <input class="quizz-input" type="text" placeholder="Resposta incorreta 2"/>
+                            <input class="quizz-input" type="text" placeholder="URL da imagem 2"/>
+                        </div>
+                        <div>
+                            <input class="quizz-input" type="text" placeholder="Resposta incorreta 3"/>
+                            <input class="quizz-input" type="text" placeholder="URL da imagem 3"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 }
 
+function correctArray(array, newArray, n) {
+    let i = array.length - n;
+    
+    for (i; i < array.length; i++) {
+        newArray.push(array[i]);
+    }
+}
+
+let questionsArrayCorrect = [];
 function verifyQuestions(classPageA, classPageB){
     const questions = document.querySelectorAll(".question");
     let count = 0;
 
     for (let i = 0; i < questions.length; i++) {
         const question = questions[i];
-        if(verifyQuestion(question)) count++; 
+        if(verifyQuestion(question)){
+            questionsArrayCorrect.push(objectQuestion);
+            count++; 
+        }
     }
-    if(count === questions.length) nextPage(classPageA, classPageB);
+
+    if(count === questions.length){
+        nextPage(classPageA, classPageB);
+        correctArray(questionsArrayCorrect, questionsArray, numberOfQuestions);
+        createLevels();
+    }
 }
 
+let objectQuestion = {};
 function verifyQuestion(question) {   
     const questionTitle = question.querySelector(".question-title").value;
     const questionColor = question.querySelector(".question-color").value;
@@ -135,7 +191,6 @@ function verifyQuestion(question) {
     let numberOfIncorrectAnswers = 0;
     let incorrectAnswersArray = [];
     let answersArray = [];
-    let objectQuestion = {};
     let objectAnswer = {};
     let control = false;
 
@@ -161,23 +216,126 @@ function verifyQuestion(question) {
         isCorrectAnswer: true
         }
     );
-
-    questionsArray.push({
-        title: questionTitle,
-        color: questionColor,
-        answers: answersArray
-    });
-
-    if((questionTitle.length < 20) ||
-        (!verifyHexadecimal(questionColor)) ||
-        (correctAnswerText === "") ||
-        (!verifyURL(correctAnswerImg)) ||
-        (numberOfIncorrectAnswers === 0))
-            alert("Digite as informações corretamente");
-    else control = true;
+    
+    if(questionTitle.length < 20){
+        alert("Pergunta deve conter no mínimo 20 caracteres");
+    }
+    else if(!verifyHexadecimal(questionColor)){
+        alert("A cor deve ser escrita em formato hexadecimal");
+    }
+    else if(correctAnswerText === ""){
+        alert("Preencha o campo da Resposta Correta");
+    }
+    else if(!verifyURL(correctAnswerImg)){
+        alert("Url inválida");
+    }
+    else if(numberOfIncorretAnswers === 0){
+        alert("Preencha o campo das respostas incorretas");
+    }
+    else{
+        objectQuestion = {
+            title: questionTitle,
+            color: questionColor,
+            answers: answersArray
+        };
+        control = true;
+    }
     return control;
 }
 
+function createLevels() {
+    const levelsDiv = document.querySelector(".levels");
+
+    /* Renderiza o primeiro nível*/
+    levelsDiv.innerHTML += `
+        <div class="level" style="height: 316px">
+            <p>Nível 1</p>
+            <div class="level-input" style="padding-top: 15px">
+                <input class="quizz-input level-title" type="text" placeholder="Título do nível">
+                <input class="quizz-input level-percentage" type="number" placeholder="% de acerto mínima">
+                <input class="quizz-input level-url" type="text" placeholder="URL da imagem do nível" >
+                <input class="quizz-input level-description" type="text" placeholder="Descrição do nível" >
+            </div>
+        </div>
+    `;
+
+    for (let i = 2; i <= numberOfLevels; i++) {
+        levelsDiv.innerHTML += `
+            <div class="level">
+                <div class="level-header">
+                    <p>Nível ${i}</p>
+                    <ion-icon name="create-outline" onclick="editQuestion(this, '.level-input', 'edit-level')"></ion-icon>
+                </div>
+                <div class="level-input hide">
+                    <input class="quizz-input level-title" type="text" placeholder="Título do nível"/>
+                    <input class="quizz-input level-percentage" type="number" placeholder="% de acerto mínima"/>
+                    <input class="quizz-input level-url" type="text" placeholder="URL da imagem do nível"/>
+                    <input class="quizz-input level-description" type="text" placeholder="Descrição do nível"/>
+                </div>
+            </div>
+        `;
+    }
+}
+
+let isPercentageZero = 0;
+let objectLevel = {};
+let levelsArrayCorrect = [];
+
+function verifyLevels(classPageA, classPageB) {
+    const levels = document.querySelectorAll(".level");   
+    let count = 0;
+
+    for (let i = 0; i < levels.length ; i++) {
+        const level = levels[i];
+        if(verifyLevel(level)){
+            levelsArrayCorrect.push(objectLevel);
+            count++;
+        }
+    }
+    
+    if(count === levels.length){
+        nextPage(classPageA, classPageB);
+        correctArray(levelsArrayCorrect, levelsArray, numberOfLevels);
+    }
+}
+
+function verifyLevel(level) {
+    const levelTitle = level.querySelector(".level-title").value;
+    const levelPercentage = parseInt(level.querySelector(".level-percentage").value);
+    const levelUrl = level.querySelector(".level-url").value;    
+    const levelDescription = level.querySelector(".level-description").value;    
+    let control = false;
+    
+    if(levelPercentage === 0){
+        isPercentageZero++;
+    }
+
+    if(levelTitle.length < 10){
+        alert("O título da pergunta deve ter, no mínimo, 10 caracteres");
+    }
+    else if(levelPercentage < 0 || levelPercentage > 100){
+        alert("Porcentagem com número inválido");
+    }
+    else if(!verifyURL(levelUrl)){
+        alert("Digite uma URL válida");
+    }
+    else if(levelDescription.length < 30){
+        alert("Descrição do nível deve conter, no mínimo, 30 caracteres");
+    }
+    else if(isPercentageZero === 0){
+        alert("Deve haver uma porcentagem com 0(zero)");
+    }
+    else{
+        objectLevel = {
+            title: levelTitle,
+            image: levelUrl,
+            text: levelDescription,
+            minValue: levelPercentage
+        }
+        control = true;
+    }
+    return control;
+}
 
 // ♥ SOPHIA ♥ start
 
@@ -204,9 +362,10 @@ function processQuizzes(response){
     }
     //pra quizzes do usuario, filtrar. mas isso é um problema pra sophia do futuro.
 }
-const span = document.querySelector('span');
-function renderQuizz(img, title, id) {
-    span.innerHTML +=
+const span_all_quizzes = document.querySelector('.list-all-quizzes');
+const span_your_quizzes = document.querySelector('.list-your-quizzes');
+function renderQuizz(img, title) {
+    span_all_quizzes.innerHTML +=
     `
     <div class="quizz-preview" id="${id}" onclick="takeThisQuizz(this)">
         <img src="${img}" alt="quizz preview">
