@@ -402,6 +402,7 @@ function renderThisQuizz(response) {
         <div class="banner">
             <p>${title}</p>
         </div>
+        <div class="banner-overlay"></div>
     `;
 
     document.querySelector(".banner").style.background = "url(" + imageURL + ")";
@@ -421,8 +422,10 @@ function renderThisQuizz(response) {
     </div>
         `;
         document.getElementById('question' + i).style.backgroundColor =  questionColor;
-        //document.querySelector(".question-title").style.backgroundColor =  questionColor ;
-        //render answers for each question
+
+        //render answers for each question ***FALTA RANDOMIZAR ORDEM***
+            //criar array questionsRandom, que é questions embaralhado
+            //e inserir essa array no for no lugar da questions
         for(let j = 0; j < questions[i].answers.length; j++) {
             let answerText = questions[i].answers[j].text;
             let answerImageURL = questions[i].answers[j].image;
