@@ -4,11 +4,10 @@ let numberOfLevels = 0;
 // ♥ SOPHIA ♥ start
 //declarando variaveis para guardar fora das funções os valores que serão enviados
 
-//para o objeto a postar:
-
-//colocar quizzes na tela
     //quizzes do usuario
     //todos os quizzes
+
+    //para o objeto a postar:
     getQuizzes();
     let quizzInfo = {};         // Array com as informações do quiz (title e imagem)
     let questionsArray = [];    // Array com as perguntas e as respostas
@@ -296,6 +295,8 @@ function verifyLevels(classPageA, classPageB) {
     if(count === levels.length){
         nextPage(classPageA, classPageB);
         correctArray(levelsArrayCorrect, levelsArray, numberOfLevels);
+        //if everything's in order, send quizz
+        sendQuizz();
     }
 }
 
@@ -339,12 +340,6 @@ function verifyLevel(level) {
 
 // ♥ SOPHIA ♥ start
 
-//ARMAZENAR QUIZZES DO USUÁRIO (POST)
-//armazenar objeto
-function storeQuizz() {
-    //axios post
-}
-
 function getQuizzes() {
     //get quizzes from axios
     const pAllQuizzes = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
@@ -364,7 +359,7 @@ function processQuizzes(response){
 }
 const span_all_quizzes = document.querySelector('.list-all-quizzes');
 const span_your_quizzes = document.querySelector('.list-your-quizzes');
-function renderQuizz(img, title) {
+function renderQuizz(img, title, id) {
     span_all_quizzes.innerHTML +=
     `
     <div class="quizz-preview" id="${id}" onclick="takeThisQuizz(this)">
@@ -444,6 +439,25 @@ function renderThisQuizz(response) {
             }
         }
     }
+}
+
+//SEND QUIZZ
+function sendQuizz(title, image, questions, levels){
+    //post to axios
+    const pSend = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes',
+    {
+        title,
+        image,
+        questions,
+        levels
+    })
+
+    pSend.then(sendQuizzSuccess);
+
+}
+
+function sendQuizzSuccess(response){
+    //uh, the show success screen is already set to appear onclick through verifyLevels
 }
 
 // ♥ SOPHIA ♥ end
