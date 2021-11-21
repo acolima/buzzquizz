@@ -38,6 +38,7 @@
                 <span class="list-all-quizzes"></span>
             </div>
         </div>
+
         <!--Tela 2 Página de um quizz-->
         <div class="quizz-page">
             <div class="quizz-page-questions-box"></div>
@@ -72,13 +73,29 @@
         <div class="quizz-levels flex-center hide">
             <p>Agora, decida os níveis</p>
             <div class="levels flex-center"></div>
-            <button class="btn-verify-levels" onclick="verifyLevels('.quizz-levels', '.quizz-success')">
+            <button class="btn-verify-levels" onclick="verifyLevels('.quizz-levels', '.loading-page')">
                 <p>Finalizar Quizz</p>
             </button>
         </div>
 
+        <!--Página de loading-->
+        <div class="loading-page flex-center hide">
+            <img src="src/img/loading.gif" alt="Gif de carregamento">
+        </div>
+
         <!--Tela 3.4 Sucesso do Quizz-->
-        <div class="quizz-success hide"></div>
+        <div class="quizz-success flex-center hide">
+            <p>Seu quizz está pronto</p>
+            <div class="quizz-success-image">
+                <p class="quizz-success-text"></p>
+            </div>
+            <div class="flex-center">
+            <button class="btn-quizz-access">
+                <p>Acessar Quizz</p>
+            </button>
+            <p class="back-home">Voltar para home</p>
+            </div>
+        </div>
     </main>
 
     <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>

@@ -9,7 +9,8 @@ let numberOfLevels = 0;
 
     //para o objeto a postar:
     getQuizzes();
-    let quizzInfo = {};         // Array com as informações do quiz (title e imagem)
+    let quizzTitle = "";        // Título do quizz
+    let quizzURL = "";          // Imagem do quizz
     let questionsArray = [];    // Array com as perguntas e as respostas
     let levelsArray = [];       // Array com os níveis
 // ♥ SOPHIA ♥ end
@@ -19,10 +20,14 @@ let numberOfLevels = 0;
 function nextPage(classPageA, classPageB){
     const pageA = document.querySelector(classPageA);
     const pageB = document.querySelector(classPageB);
+    const quizzPage = document.querySelector(".quizz-page-questions-box");
+
+    if (classPageA === ".home") {
+      quizzPage.classList.add("hide");
+    }
 
     pageA.classList.add("hide");
     pageB.classList.remove("hide");
-
 }
 
 // Verifica se a URL passada é válida
@@ -49,16 +54,16 @@ function verifyHexadecimal(color){
 
 // Verifica as informações do quiz
 function verifyQuizzInfo(classPageA, classPageB){
-    const quizzTitle = document.querySelector(".quizz-title").value;
-    const quizzURL = document.querySelector(".quizz-url").value;
+    const quizzTitleInput = document.querySelector(".quizz-title").value;
+    const quizzURLInput = document.querySelector(".quizz-url").value;
     numberOfQuestions = document.querySelector(".quizz-num-questions").value;
     numberOfLevels = document.querySelector(".quizz-num-levels").value;
     let control = 0;
 
-    if(quizzTitle.length < 20 || quizzTitle.length > 65)
+    if(quizzTitleInput.length < 20 || quizzTitleInput.length > 65)
         alert("Título do Quizz deve ter entre 20 e 65 caracteres");   
     else control++;
-    if(!verifyURL(quizzURL))
+    if(!verifyURL(quizzURLInput))
         alert("Formato de URL inválido");   
     else control++;
     if(numberOfQuestions < 3 )
@@ -68,11 +73,11 @@ function verifyQuizzInfo(classPageA, classPageB){
         alert("São necessários no mínimo 2 níveis");   
     else control++;
 
-    quizzInfo = {
-        quizzTitle,
-        quizzURL
-    }
+    quizzTitle = quizzTitleInput;
+    quizzURL = quizzURLInput;
 
+    console.dir(quizzTitle)
+    console.dir(quizzURL)
     if(control === 4){
         nextPage(classPageA, classPageB);
         createQuestions();
@@ -297,9 +302,7 @@ function verifyLevels(classPageA, classPageB) {
         correctArray(levelsArrayCorrect, levelsArray, numberOfLevels);
 
         // ♥ SOPHIA ♥ start --- if everything's in order, send quizz
-        const titleSend = quizzInfo[0];
-        const imageSend = quizzInfo[1];
-        sendQuizz(titleSend, imageSend, questionsArray, levelsArray);
+        sendQuizz(quizzTitle, quizzURL, questionsArray, levelsArray);
         // ♥ SOPHIA ♥ end
     }
 }
@@ -460,13 +463,21 @@ function sendQuizz(title, image, questions, levels){
         levels
     })
 
-    pSend.then(sendQuizzSuccess);
-
+    pSend.catch(sendQuizzSuccess);
+    pSend.then((error) => {
+        console.log(error.response);
+    });
 }
-
+// CAROL - Considerei a tela de sucesso quando dá erro, pq tá dando ruim no 
+// servidor kkkkkkk Quando der certo, só trocar as funções. Ainda vou colocar onclick nos botões de sucesso
 function sendQuizzSuccess(response){
-    //the show success screen is already set to appear onclick through verifyLevels. is that right? maybe verifyLevels
-    //should show the user a loading screen, while this function shows success screen
+    nextPage('.loading-page', '.quizz-success')
+
+    const imageSuccess = document.querySelector(".quizz-success-image");
+    const titleSuccess = document.querySelector(".quizz-success-text");
+    
+    titleSuccess.innerHTML = quizzTitle;
+    imageSuccess.style.background = "url(" + quizzURL + ")";
 }
 
 // ♥ SOPHIA ♥ end

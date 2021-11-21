@@ -102,7 +102,8 @@ main {
 
 .quizz-info > p, 
 .quizz-questions > p, 
-.quizz-levels > p{
+.quizz-levels > p,
+.quizz-success > p:first-child{
     font-size: 23px;
     font-weight: 700;
     color: #000;
@@ -158,7 +159,8 @@ main {
   
 .btn-verify-info p, 
 .btn-verify-question p,
-.btn-verify-levels p {
+.btn-verify-levels p,
+.btn-quizz-access p  {
     color: #fff;
   
     font-size: 18px;
@@ -251,6 +253,65 @@ ion-icon {
   gap: 14px;
 }
 
+/* Tela de loading*/
+.loading-page img{
+    width: 250px;
+}
+
+
+/* Tela 3.4 */
+.quizz-success {
+    gap: 45px;
+}
+  
+.quizz-success-image {
+    height: 266px;
+    width: 500px;
+  
+    border-radius: 5px;
+  
+    object-fit: cover;
+  
+    display: flex;
+    align-items: flex-end;
+
+    background-color: lightblue;
+}
+  
+.quizz-success-text {
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 27px;
+    color: #fff;
+  
+    padding: 0 0 9px 23px;
+}
+  
+.back-home {
+    font-size: 21px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 25px;
+    color: #818181;
+  
+    cursor: pointer;
+}
+  
+.quizz-success > div:last-child {
+    gap: 9px;
+}
+  
+.btn-quizz-access {
+    width: 220px;
+    height: 44px;
+  
+    border-radius: 15px;
+  
+    background-color: #ec362d;
+  
+    cursor: pointer;
+}
+
 .hide {
     display: none;
 }
@@ -314,6 +375,8 @@ span {
 
     padding: 19px 20px;
     margin: 6px 0;
+
+    cursor: pointer;
 }
 
 .quizz-preview img {
