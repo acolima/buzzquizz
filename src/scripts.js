@@ -228,7 +228,7 @@ function verifyQuestion(question) {
     else if(!verifyURL(correctAnswerImg)){
         alert("Url inválida");
     }
-    else if(numberOfIncorretAnswers === 0){
+    else if(numberOfIncorrectAnswers === 0){
         alert("Preencha o campo das respostas incorretas");
     }
     else{
@@ -295,8 +295,12 @@ function verifyLevels(classPageA, classPageB) {
     if(count === levels.length){
         nextPage(classPageA, classPageB);
         correctArray(levelsArrayCorrect, levelsArray, numberOfLevels);
-        //if everything's in order, send quizz
-        sendQuizz();
+
+        // ♥ SOPHIA ♥ start --- if everything's in order, send quizz
+        const titleSend = quizzInfo[0];
+        const imageSend = quizzInfo[1];
+        sendQuizz(titleSend, imageSend, questionsArray, levelsArray);
+        // ♥ SOPHIA ♥ end
     }
 }
 
@@ -457,7 +461,8 @@ function sendQuizz(title, image, questions, levels){
 }
 
 function sendQuizzSuccess(response){
-    //uh, the show success screen is already set to appear onclick through verifyLevels
+    //the show success screen is already set to appear onclick through verifyLevels. is that right? maybe verifyLevels
+    //should show the user a loading screen, while this function shows success screen
 }
 
 // ♥ SOPHIA ♥ end
