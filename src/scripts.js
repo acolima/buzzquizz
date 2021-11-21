@@ -404,7 +404,7 @@ function renderThisQuizz(response) {
         </div>
     `;
 
-    document.querySelector(".banner").style.background = `"url('${imageURL}')"`;
+    document.querySelector(".banner").style.background = "url(" + imageURL + ")";
     document.querySelector(".banner p").innerHTML = `${title}`;
     //render questions
     for(let i = 0; i < nQuestions; i++){
@@ -415,12 +415,13 @@ function renderThisQuizz(response) {
         `
         <div class="quizz-page-question">
         <div>
-            <p class="question-title">${questionTitle}</p>
+            <p class="question-title" id="question${i}">${questionTitle}</p>
             <div class="quizz-page-answers-box spawn"></div>
         </div>
     </div>
         `;
-        document.querySelector(".question-title").style.backgroundColor = `'${questionColor}'`
+        document.getElementById('question' + i).style.backgroundColor =  questionColor;
+        //document.querySelector(".question-title").style.backgroundColor =  questionColor ;
         //render answers for each question
         for(let j = 0; j < questions[i].answers.length; j++) {
             let answerText = questions[i].answers[j].text;
