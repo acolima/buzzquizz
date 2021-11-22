@@ -293,6 +293,8 @@ ion-icon {
     font-style: normal;
     line-height: 25px;
     color: #818181;
+
+    margin-top: 10px;
   
     cursor: pointer;
 }
