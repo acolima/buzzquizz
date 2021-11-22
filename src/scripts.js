@@ -76,8 +76,6 @@ function verifyQuizzInfo(classPageA, classPageB){
     quizzTitle = quizzTitleInput;
     quizzURL = quizzURLInput;
 
-    console.dir(quizzTitle)
-    console.dir(quizzURL)
     if(control === 4){
         nextPage(classPageA, classPageB);
         createQuestions();
@@ -94,7 +92,6 @@ function editQuestion(edit, classSelector, classBehavior) {
 function createQuestions(){
     const questionsDiv = document.querySelector(".questions");
 
-    /* Renderiza a primeira pergunta */
     questionsDiv.innerHTML += `
         <div class="question" style="height: 825px">
             <p>Pergunta 1</p>
@@ -185,6 +182,10 @@ function verifyQuestions(classPageA, classPageB){
     }
 }
 
+function comparador() { 
+	return Math.random() - 0.5; 
+}
+
 let objectQuestion = {};
 function verifyQuestion(question) {   
     const questionTitle = question.querySelector(".question-title").value;
@@ -202,7 +203,7 @@ function verifyQuestion(question) {
         const incorrectAnswer = incorrectAnswers.children[i];
         if(incorrectAnswer.children[0].value !== ""){
             objectAnswer = {
-                title: incorrectAnswer.children[0].value,
+                text: incorrectAnswer.children[0].value,
                 image: incorrectAnswer.children[1].value,
                 isCorrectAnswer: false
             };
@@ -215,11 +216,13 @@ function verifyQuestion(question) {
         answersArray.push(incorrectAnswersArray[i]);
 
     answersArray.push({
-        title: correctAnswerText,
+        text: correctAnswerText,
         image: correctAnswerImg,
         isCorrectAnswer: true
         }
     );
+    
+    answersArray.sort(comparador);
     
     if(questionTitle.length < 20){
         alert("Pergunta deve conter no mínimo 20 caracteres");
@@ -301,9 +304,7 @@ function verifyLevels(classPageA, classPageB) {
         nextPage(classPageA, classPageB);
         correctArray(levelsArrayCorrect, levelsArray, numberOfLevels);
 
-        // ♥ SOPHIA ♥ start --- if everything's in order, send quizz
         sendQuizz(quizzTitle, quizzURL, questionsArray, levelsArray);
-        // ♥ SOPHIA ♥ end
     }
 }
 
@@ -397,7 +398,6 @@ function renderThisQuizz(response) {
     let nQuestions = questions.length;
     let title = quizz.title;
     let imageURL = quizz.image;
-    console.log(imageURL);
 
     //render banner
     document.querySelector("body").innerHTML += 
@@ -418,17 +418,15 @@ function renderThisQuizz(response) {
         document.querySelector(".quizz-page-questions-box").innerHTML += 
         `
         <div class="quizz-page-question">
-        <div>
-            <p class="question-title" id="question${i}">${questionTitle}</p>
-            <div class="quizz-page-answers-box spawn"></div>
+            <div>
+                <p class="question-title" id="question${i}">${questionTitle}</p>
+                <div class="quizz-page-answers-box spawn"></div>
+            </div>
         </div>
-    </div>
         `;
         document.getElementById('question' + i).style.backgroundColor =  questionColor;
 
-        //render answers for each question ***FALTA RANDOMIZAR ORDEM***
-            //criar array questionsRandom, que é questions embaralhado
-            //e inserir essa array no for no lugar da questions
+        //render answers for each question 
         for(let j = 0; j < questions[i].answers.length; j++) {
             let answerText = questions[i].answers[j].text;
             let answerImageURL = questions[i].answers[j].image;
@@ -455,21 +453,21 @@ function renderThisQuizz(response) {
 //SEND QUIZZ
 function sendQuizz(title, image, questions, levels){
     //post to axios
-    const pSend = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes',
-    {
+
+    const object = {
         title,
         image,
         questions,
         levels
-    })
+    }
+    const pSend = axios.post('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes', object);
 
-    pSend.catch(sendQuizzSuccess);
-    pSend.then((error) => {
+    pSend.then(sendQuizzSuccess);
+    pSend.catch((error) => {
         console.log(error.response);
     });
 }
-// CAROL - Considerei a tela de sucesso quando dá erro, pq tá dando ruim no 
-// servidor kkkkkkk Quando der certo, só trocar as funções. Ainda vou colocar onclick nos botões de sucesso
+
 function sendQuizzSuccess(response){
     nextPage('.loading-page', '.quizz-success')
 
@@ -480,4 +478,9 @@ function sendQuizzSuccess(response){
     imageSuccess.style.background = "url(" + quizzURL + ")";
 }
 
-// ♥ SOPHIA ♥ end
+function backHome(classPageA, classPageB) {
+    // volta para a página home
+    nextPage(classPageA, classPageB);
+
+    //precisa mostrar o quizz criado quando voltar para home
+}
