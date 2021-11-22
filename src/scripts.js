@@ -3,6 +3,10 @@ let numberOfLevels = 0;
 
 let your_ids_array = JSON.parse(localStorage.getItem("your_ids"));
 
+if(your_ids_array !== null){
+    layoutWithYourQuizzes();
+}
+
 // ♥ SOPHIA ♥ start
 //declarando variaveis para guardar fora das funções os valores que serão enviados
 
@@ -17,6 +21,16 @@ let your_ids_array = JSON.parse(localStorage.getItem("your_ids"));
     let levelsArray = [];       // Array com os níveis
 // ♥ SOPHIA ♥ end
 
+function layoutWithYourQuizzes(){
+        const your_quizzes = document.querySelector(".your-quizzes");
+        your_quizzes.classList.remove("hide");
+    
+        const create_quizz = document.querySelector(".create-quizz");
+        create_quizz.classList.add("hide");
+    
+        const add_circle = document.querySelector(".add-circle");
+        add_circle.classList.remove("hide");
+}
 
 // Passar para a página seguinte
 function nextPage(classPageA, classPageB){
@@ -355,6 +369,7 @@ function getQuizzes() {
     const pAllQuizzes = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
     pAllQuizzes.then(processQuizzes)
 }
+
 function processQuizzes(response){
     const span_all_quizzes = document.querySelector('.list-all-quizzes');
     const span_your_quizzes = document.querySelector('.list-your-quizzes');
@@ -362,7 +377,7 @@ function processQuizzes(response){
     const quizzes = response.data;
     const nQuizzes = quizzes.length;
     let isYourQuizz = false;
-
+    
     //percorrer lista de quizzes e imprimir a preview de cada um
     for(let i = 0; i < nQuizzes; i++){
 
@@ -370,13 +385,12 @@ function processQuizzes(response){
         const title = quizzes[i].title;
         const id = quizzes[i].id;
 
-        for(let j = 0; j < your_ids_array.length; j++){
-            if(quizzes[i].id === your_ids_array[j]){
-                renderQuizz(span_your_quizzes, img, title, id);
-                isYourQuizz = true;
-            }
-            else{
-
+        if(your_ids_array !== null){
+            for(let j = 0; j < your_ids_array.length; j++){
+                if(quizzes[i].id === your_ids_array[j]){
+                    renderQuizz(span_your_quizzes, img, title, id);
+                    isYourQuizz = true;
+                }
             }
         }
         if(!isYourQuizz){
