@@ -134,9 +134,13 @@ main {
     font-style: italic;
     font-weight: 400;
     line-height: 22px;
-    color: #bababa;
+    color: #000;
   
     padding-left: 14px;
+}
+
+.quizz-input::placeholder {
+    color: rgb(179, 179, 179);
 }
   
 .quizz-info input:first-child {
@@ -320,14 +324,11 @@ ion-icon {
 
 .your-quizzes {
     width: 100%;
-    
 }
 
 .your-quizzes > div {
     display: flex;
     align-items: center;
-
-    margin-top: 77px;
 }
 
 .your-quizzes p {
@@ -343,14 +344,13 @@ ion-icon {
 
 .all-quizzes {
     width: 100%;
-    
 }
 
 .all-quizzes > p {
     font-weight: 700;
     font-size: 20px;
     
-    margin-top: 77px;
+    margin-top: 45px;
 }
 
 span {
