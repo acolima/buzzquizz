@@ -361,6 +361,7 @@ function processQuizzes(response){
     
     const quizzes = response.data;
     const nQuizzes = quizzes.length;
+    let isYourQuizz = false;
 
     //percorrer lista de quizzes e imprimir a preview de cada um
     for(let i = 0; i < nQuizzes; i++){
@@ -372,9 +373,17 @@ function processQuizzes(response){
         for(let j = 0; j < your_ids_array.length; j++){
             if(quizzes[i].id === your_ids_array[j]){
                 renderQuizz(span_your_quizzes, img, title, id);
+                isYourQuizz = true;
+            }
+            else{
+
             }
         }
-        renderQuizz(span_all_quizzes, img, title, id);
+        if(!isYourQuizz){
+            renderQuizz(span_all_quizzes, img, title, id);
+        }
+        isYourQuizz = false;
+
     }
 }
 
