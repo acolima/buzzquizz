@@ -669,7 +669,14 @@ function restartQuizz() {
     document.querySelector(".banner").scrollIntoView({behavior: "smooth"});
 
     //reset answers
+        //change color back
+        document.querySelectorAll(".quizz-page-answer p").style.color = "#000000";
         
+        //remove class selected
+        document.querySelectorAll(".selected").classList.remove("selected");
+
+        //hide overlay
+        document.querySelectorAll(".selection-overlay").classList.add("hide");
 
     //hide result box
     document.querySelector(".quizz-page-result").classList.add("hide");
