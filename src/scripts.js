@@ -484,3 +484,56 @@ function backHome(classPageA, classPageB) {
 
     //precisa mostrar o quizz criado quando voltar para home
 }
+setTimeout(quizzResult, 2000)
+function quizzResult(totalQuestions,rightAnswers) {
+    
+    //rightQuestions will be previously determined by a counter
+    //calculate % 
+    const score = Math.round(rightAnswers/totalQuestions);
+    let result = levels[0];
+    for(let i = 0; i < levels.length; i++) {
+        if(score >= levelPercentage) {
+            result = levels[i];
+        }
+    }
+    //get info of the right level
+    const resultTitle = result.title;
+    const resultImgURL = result.image;
+    const resultText = result.text;
+    //print results
+    document.querySelector(".quizz-page-questions-box").innerHTML += 
+    `
+        <div class="quizz-page-result">
+            <div>
+                <p class="result-title">${resultTitle}</p>
+                <div class="result-description-box">
+                    <img src="${resultImgURL}" />
+                    <p class="result-text">${resultText}</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="restart" onclick="restartQuizz()">Reiniciar Quizz</button>
+        <button class="go-home" onclick="backHome(classPageA, classPageB)">Voltar pra Home</button>
+    `;
+    //scroll down to result element
+    document.querySelector(".quizz-page-result").scrollIntoView({behavior: "smooth"});
+    
+}
+
+function restartQuizz() {
+    //scroll to top
+    document.querySelector(".banner").scrollIntoView({behavior: "smooth"});
+
+    //reset answers
+        //(esperar Sarah fazer o comportamento das perguntas antes de fazer isso)
+
+    //hide result box
+    document.querySelector(".quizz-page-result").classList.add("hide");
+        //assim
+        //eu sei que isso vai fazer com que o resultado anterior ainda exista na página,
+            //mas acho que não vai causar problemas
+        //se causar problemas, criar uma quizz-page-result-box ao final
+            //da criação de perguntas
+            //e inserir o resultado ali
+}
