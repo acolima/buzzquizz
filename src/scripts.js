@@ -484,7 +484,7 @@ function renderThisQuizz(response) {
         `
         <div class="quizz-page-question" data-identifier="question">
             <div>
-                <div class="question-title" style="background-color: ${questionColor}">
+                <div class="question-title-quizz" style="background-color: ${questionColor}">
                     <p id="question${i}">${questionTitle}</p>
                 </div>
                 <div class="quizz-page-answers-box spawn"></div>
