@@ -465,7 +465,7 @@ function renderThisQuizz(response) {
     thisQuizzLevels = quizz.levels;
 
     //render banner
-    document.querySelector("body").innerHTML += 
+    document.querySelector(".quizz-page").innerHTML += 
     `
         <div class="banner">
             <p>${title}</p>
@@ -485,11 +485,12 @@ function renderThisQuizz(response) {
         `
         <div class="quizz-page-question" data-identifier="question">
             <div>
-                <p class="question-title" id="question${i}">${questionTitle}</p>
+                <div class="question-title" style="background-color: ${questionColor}">
+                    <p id="question${i}">${questionTitle}</p>
+                </div>
                 <div class="quizz-page-answers-box spawn"></div>
             </div>
         </div>`;
-        document.getElementById('question' + i).style.backgroundColor =  questionColor;
 
         //render answers for each question 
         for(let j = 0; j < questions[i].answers.length; j++) {
@@ -638,17 +639,21 @@ function quizzResult(totalQuestions,rightAnswers, levels) {
     `
         <div class="quizz-page-result" data-identifier="quizz-result">
             <div>
-                <p class="result-title">${score}% de acerto: ${resultTitle}</p>
+                <div class="result-title">
+                    <p >${score}% de acerto: ${resultTitle}</p>
+                </div>    
                 <div class="result-description-box">
                     <img src="${resultImgURL}" />
-                    <p class="result-text">${resultText}</p>
+                    <div class="result-text">
+                        <p >${resultText}</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="result-buttons">
             <button class="restart" onclick="restartQuizz()">Reiniciar Quizz</button>
-            <button class="go-home" onclick="nextPage('.quizz-page', '.home')">Voltar pra Home</button>
+            <button class="go-home" onclick="goHome()">Voltar pra Home</button>
         </div>
         `;
     //scroll down to result element
@@ -656,9 +661,18 @@ function quizzResult(totalQuestions,rightAnswers, levels) {
     
 }
 
+function goHome() {
+    const quizzPage = document.querySelector(".quizz-page");
+    const homePage = document.querySelector(".home");
+    
+    quizzPage.innerHTML = "";
+    homePage.classList.remove("hide");
+    window.scrollTo(0, 0);
+}
+
 function restartQuizz() {
     //scroll to top
-    document.querySelector(".banner").scrollIntoView({behavior: "smooth"});
+    window.scrollTo(0, 0);
 
     //reset answers
         

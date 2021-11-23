@@ -8,9 +8,8 @@
     .quizz-page-question, .quizz-page-questions-box{
         width: 100vw;
     }
-    .quizz-page-answer-box{
-        flex-wrap: nowrap;
-    }
+
+    
 
     .create-quizz,
     .all-quizzes,
@@ -40,8 +39,21 @@
     .btn-verify-levels,
     .btn-quizz-access,
     .quizz-success-image,
-    .question-title{
+    .quizz-page-question > div,
+    .quizz-page-result > div{
         width: 90vw;
     }
 
+    .question-title, .result-title{
+        width: 100%;
+    }
+
+    .result-description-box{
+        display: flex;
+        flex-direction: column;
+    }
+    .result-description-box img,
+    .result-text{
+        width: 100%
+    }
 }
