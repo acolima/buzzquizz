@@ -137,7 +137,7 @@ function createQuestions(){
     const questionsDiv = document.querySelector(".questions");
 
     questionsDiv.innerHTML += `
-        <div class="question" style="height: 825px">
+        <div class="question" style="height: 825px" data-identifier="question">
             <h3>Pergunta 1</h3>
             <div class="question-input" style="padding-top: 20px">
                 <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
@@ -145,7 +145,7 @@ function createQuestions(){
                 <h3>Resposta correta</h3>
                 <input class="quizz-input correct-answer-text" type="text" placeholder="Resposta correta"/>
                 <input class="quizz-input correct-answer-img" type="text" placeholder="URL da imagem"/>
-                <h3>Respostas incorreta</h3>
+                <h3>Respostas incorretas</h3>
                 <div class="incorrect-answers">
                     <div>
                         <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
@@ -169,7 +169,7 @@ function createQuestions(){
             <div class="question">
                 <div class="question-header">
                     <h3>Pergunta ${i}</h3>
-                    <ion-icon name="create-outline" onclick="editQuestion(this, '.question-input', 'edit-question')"></ion-icon>
+                    <ion-icon name="create-outline" onclick="editQuestion(this, '.question-input', 'edit-question')" data-identifier="expand"></ion-icon>
                 </div>
                 <div class="question-input hide">
                     <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
@@ -299,7 +299,7 @@ function createLevels() {
 
     /* Renderiza o primeiro nível*/
     levelsDiv.innerHTML += `
-        <div class="level" style="height: 316px">
+        <div class="level" style="height: 316px" data-identifier="level">
             <p>Nível 1</p>
             <div class="level-input" style="padding-top: 15px">
                 <input class="quizz-input level-title" type="text" placeholder="Título do nível">
@@ -312,10 +312,10 @@ function createLevels() {
 
     for (let i = 2; i <= numberOfLevels; i++) {
         levelsDiv.innerHTML += `
-            <div class="level">
+            <div class="level" data-identifier="level">
                 <div class="level-header">
                     <p>Nível ${i}</p>
-                    <ion-icon name="create-outline" onclick="editQuestion(this, '.level-input', 'edit-level')"></ion-icon>
+                    <ion-icon name="create-outline" onclick="editQuestion(this, '.level-input', 'edit-level')" data-identifier="expand"></ion-icon>
                 </div>
                 <div class="level-input hide">
                     <input class="quizz-input level-title" type="text" placeholder="Título do nível"/>
@@ -390,8 +390,6 @@ function verifyLevel(level) {
     return control;
 }
 
-// ♥ SOPHIA ♥ start
-
 function getQuizzes() {
     //get quizzes from axios
     const pAllQuizzes = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
@@ -432,7 +430,7 @@ function processQuizzes(response){
 function renderQuizz(span, img, title, id) {
     span.innerHTML +=
     `
-    <div class="quizz-preview" id="${id}" onclick="takeThisQuizz(this)">
+    <div class="quizz-preview" id="${id}" onclick="takeThisQuizz(this)" data-identifier="quizz-card">
         <img src="${img}" alt="quizz preview">
         <p>${title}</p>
     </div>
@@ -485,7 +483,7 @@ function renderThisQuizz(response) {
 
         document.querySelector(".quizz-page-questions-box").innerHTML += 
         `
-        <div class="quizz-page-question">
+        <div class="quizz-page-question" data-identifier="question">
             <div>
                 <p class="question-title" id="question${i}">${questionTitle}</p>
                 <div class="quizz-page-answers-box spawn"></div>
@@ -505,7 +503,7 @@ function renderThisQuizz(response) {
             
             document.querySelector(".spawn").innerHTML += 
             `
-            <div class="quizz-page-answer" id="${correctAnswer}" onclick="selectAnswer(this)">
+            <div class="quizz-page-answer" id="${correctAnswer}" onclick="selectAnswer(this)" data-identifier="answer">
                 <img src='${answerImageURL}' alt="" class="${correctAnswer}">
                 <p><strong>${answerText}</strong></p>
             </div>
@@ -630,7 +628,7 @@ function quizzResult(totalQuestions,rightAnswers) {
     //print results
     document.querySelector(".quizz-page-questions-box").innerHTML += 
     `
-        <div class="quizz-page-result">
+        <div class="quizz-page-result" data-identifier="quizz-result">
             <div>
                 <p class="result-title">Nível ${resultNum}: ${resultTitle}</p>
                 <div class="result-description-box">
