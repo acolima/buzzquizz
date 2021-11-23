@@ -453,13 +453,15 @@ function takeThisQuizz(quizz) {
     document.querySelector(".home").classList.add("hide");
     document.querySelector(".quizz-page").classList.remove("hide");
 }
-
+let thisQuizzLevels = [];
 function renderThisQuizz(response) {
     let quizz = response.data;
     let questions = quizz.questions;
     let nQuestions = questions.length;
     let title = quizz.title;
     let imageURL = quizz.image;
+
+    thisQuizzLevels = quizz.levels;
 
     //render banner
     document.querySelector("body").innerHTML += 
@@ -574,16 +576,16 @@ function backHome(classPageA, classPageB) {
 
     //precisa mostrar o quizz criado quando voltar para home
 }
-setTimeout(quizzResult, 2000)
+//setTimeout(quizzResult, 2000) //essa função precisa estar dentro de um if, dentro da função onclick de comportamento de respostas
 function quizzResult(totalQuestions,rightAnswers) {
     
     //rightQuestions will be previously determined by a counter
     //calculate % 
     const score = Math.round(rightAnswers/totalQuestions);
-    let result = levels[0];
-    for(let i = 0; i < levels.length; i++) {
+    let result = thisQuizzLevels[0];
+    for(let i = 0; i < levelsArray.length; i++) {
         if(score >= levelPercentage) {
-            result = levels[i];
+            result = levelsArray[i];
         }
     }
     //get info of the right level
@@ -603,9 +605,11 @@ function quizzResult(totalQuestions,rightAnswers) {
             </div>
         </div>
 
-        <button class="restart" onclick="restartQuizz()">Reiniciar Quizz</button>
-        <button class="go-home" onclick="backHome(classPageA, classPageB)">Voltar pra Home</button>
-    `;
+        <div class="result-buttons">
+            <button class="restart" onclick="restartQuizz()">Reiniciar Quizz</button>
+            <button class="go-home" onclick="backHome(classPageA, classPageB)">Voltar pra Home</button>
+        </div>
+        `;
     //scroll down to result element
     document.querySelector(".quizz-page-result").scrollIntoView({behavior: "smooth"});
     

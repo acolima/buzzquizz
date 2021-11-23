@@ -447,6 +447,9 @@ span {
 .quizz-page-questions-box {
     margin-top: 200px;
     width: 759px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .quizz-page-question {
@@ -511,15 +514,22 @@ span {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 21px;
+    margin-top: 18px;
 }
 
 .result-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 99px;
     background: #EC362D;
     color: #FFFFFF;
 }
 .result-text {
     width: 328px;
     color: #484848;
+    word-wrap: break-word;
 }
 
 .quizz-page-result img {
@@ -528,10 +538,22 @@ span {
     object-fit: cover;
 }
 
+.result-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 260.38px;
+    gap: 16px;
+}
+
 button.restart {
+    width: 100%;
+    height: 52px;
     border-radius: 15px;
     background: #EC362D;
     color: #FFF5F4;
+    text-align: center;
 }
 
 button.go-home {
