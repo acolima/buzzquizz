@@ -406,11 +406,11 @@ function processQuizzes(response){
     
     //percorrer lista de quizzes e imprimir a preview de cada um
     for(let i = 0; i < nQuizzes; i++){
-
+        
         const img = quizzes[i].image;
         const title = quizzes[i].title;
         const id = quizzes[i].id;
-
+        
         if(your_ids_array !== null){
             for(let j = 0; j < your_ids_array.length; j++){
                 if(quizzes[i].id === your_ids_array[j]){
@@ -423,7 +423,7 @@ function processQuizzes(response){
             renderQuizz(span_all_quizzes, img, title, id);
         }
         isYourQuizz = false;
-
+        
     }
 }
 
@@ -536,7 +536,7 @@ function selectAnswer(selectedAnswer) {
     }
     if(answeredCounter == nThisQuizzQuestions) {
         setTimeout(() => {
-            quizzResult(nThisQuizzQuestions, correctCounter)
+            quizzResult(nThisQuizzQuestions, correctCounter, thisQuizzLevels)
           }, 2000)
     } else {
         let nextQuestionIdNumber = thisQuestionIdNumber + 1;
@@ -608,17 +608,18 @@ function backHome(classPageA, classPageB) {
 
     //precisa mostrar o quizz criado quando voltar para home
 }
-function quizzResult(totalQuestions,rightAnswers) {
+function quizzResult(totalQuestions,rightAnswers, levels) {
     
     //rightQuestions will be previously determined by a counter
     //calculate % 
-    const score = Math.round(rightAnswers/totalQuestions);
+    const score = Math.round((rightAnswers/totalQuestions)*100);
     let result = thisQuizzLevels[0];
     let resultNum = 0;
-    for(let i = 0; i < levelsArray.length; i++) {
-        if(score >= levelPercentage) {
-            result = levelsArray[i];
-            resultNum = i+1;
+ 
+    for(let i = 0; i < levels.length; i++) {
+        if(score >= thisQuizzLevels[i].minValue) {
+            result = levels[i];
+            resultNum = i;
         }
     }
     //get info of the right level
@@ -630,7 +631,7 @@ function quizzResult(totalQuestions,rightAnswers) {
     `
         <div class="quizz-page-result" data-identifier="quizz-result">
             <div>
-                <p class="result-title">Nível ${resultNum}: ${resultTitle}</p>
+                <p class="result-title">${score}% de acerto: ${resultTitle}</p>
                 <div class="result-description-box">
                     <img src="${resultImgURL}" />
                     <p class="result-text">${resultText}</p>
@@ -640,7 +641,7 @@ function quizzResult(totalQuestions,rightAnswers) {
 
         <div class="result-buttons">
             <button class="restart" onclick="restartQuizz()">Reiniciar Quizz</button>
-            <button class="go-home" onclick="backHome(classPageA, classPageB)">Voltar pra Home</button>
+            <button class="go-home" onclick="nextPage('.quizz-page', '.home')">Voltar pra Home</button>
         </div>
         `;
     //scroll down to result element

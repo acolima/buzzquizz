@@ -1,0 +1,47 @@
+@media(max-width: 1100px){
+    body, header,.home,
+    .quizz-info, .quizz-questions, .quizz-levels{
+        width: 100%;
+    }
+    
+    .quizz-inputs, .questions, .question, .levels, .level,
+    .quizz-page-question, .quizz-page-questions-box{
+        width: 100vw;
+    }
+    .quizz-page-answer-box{
+        flex-wrap: nowrap;
+    }
+
+    .create-quizz,
+    .all-quizzes,
+    .your-quizzes,
+    .your-quizzes div,
+    .quizz-page,
+    .loading-page,
+    .quizz-success,
+    .quizz-preview,
+    .all-quizzes p{
+        width: 90%;
+
+        margin: 0 auto;
+    }
+
+    .list-all-quizzes{
+        display: flex;
+        gap: 30px;
+    }
+
+    .quizz-input{
+        width: 95vw;
+    }
+
+    .btn-verify-info,
+    .btn-verify-question,
+    .btn-verify-levels,
+    .btn-quizz-access,
+    .quizz-success-image,
+    .question-title{
+        width: 90vw;
+    }
+
+}
