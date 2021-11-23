@@ -454,10 +454,13 @@ function takeThisQuizz(quizz) {
     document.querySelector(".quizz-page").classList.remove("hide");
 }
 let thisQuizzLevels = [];
+let nThisQuizzQuestions = 0;
+let thisQuestionIdNumber = 0;
 function renderThisQuizz(response) {
     let quizz = response.data;
     let questions = quizz.questions;
     let nQuestions = questions.length;
+        nThisQuizzQuestions = nQuestions;
     let title = quizz.title;
     let imageURL = quizz.image;
 
@@ -478,6 +481,7 @@ function renderThisQuizz(response) {
     for(let i = 0; i < nQuestions; i++){
         let questionTitle = questions[i].title;
         let questionColor = questions[i].color;
+        thisQuestionIdNumber = i;
 
         document.querySelector(".quizz-page-questions-box").innerHTML += 
         `
@@ -514,7 +518,8 @@ function renderThisQuizz(response) {
         }
     }
 }
-
+let correctCounter = 0;
+let answeredCounter = 0;
 function selectAnswer(selectedAnswer) {
     selectedAnswer.parentNode.style.color = '#FF4B4B';
     selectedAnswer.parentNode.querySelector('#true').style.color = '#009C22';
@@ -523,6 +528,24 @@ function selectAnswer(selectedAnswer) {
     selectedAnswer.classList.add("selected")
     //add overlay
     selectedAnswer.parentNode.parentNode.querySelector(".hide").classList.remove("hide");
+    
+    //add to counter
+    answeredCounter++;
+
+    //contador de respostas corretas
+    if(selectedAnswer.id == 'true') {
+        correctCounter++;
+    }
+    if(answeredCounter == nThisQuizzQuestions) {
+        setTimeout(() => {
+            quizzResult(nThisQuizzQuestions, correctCounter)
+          }, 2000)
+    } else {
+        let nextQuestionIdNumber = thisQuestionIdNumber + 1;
+        setTimeout(() => {
+            document.querySelector(`#question${nextQuestionIdNumber}`).scrollIntoView
+        }, 2000)
+    }
 }
 
 //SEND QUIZZ
@@ -587,16 +610,17 @@ function backHome(classPageA, classPageB) {
 
     //precisa mostrar o quizz criado quando voltar para home
 }
-//setTimeout(quizzResult, 2000) //essa função precisa estar dentro de um if, dentro da função onclick de comportamento de respostas
 function quizzResult(totalQuestions,rightAnswers) {
     
     //rightQuestions will be previously determined by a counter
     //calculate % 
     const score = Math.round(rightAnswers/totalQuestions);
     let result = thisQuizzLevels[0];
+    let resultNum = 0;
     for(let i = 0; i < levelsArray.length; i++) {
         if(score >= levelPercentage) {
             result = levelsArray[i];
+            resultNum = i+1;
         }
     }
     //get info of the right level
@@ -608,7 +632,7 @@ function quizzResult(totalQuestions,rightAnswers) {
     `
         <div class="quizz-page-result">
             <div>
-                <p class="result-title">${resultTitle}</p>
+                <p class="result-title">Nível ${resultNum}: ${resultTitle}</p>
                 <div class="result-description-box">
                     <img src="${resultImgURL}" />
                     <p class="result-text">${resultText}</p>
@@ -631,7 +655,7 @@ function restartQuizz() {
     document.querySelector(".banner").scrollIntoView({behavior: "smooth"});
 
     //reset answers
-        //(esperar Sarah fazer o comportamento das perguntas antes de fazer isso)
+        
 
     //hide result box
     document.querySelector(".quizz-page-result").classList.add("hide");
