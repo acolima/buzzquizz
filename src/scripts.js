@@ -680,7 +680,7 @@ function goHome() {
 
 function restartQuizz() {
     //scroll to top
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
 
     //reset answers
         //change color back
