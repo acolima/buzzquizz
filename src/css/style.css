@@ -483,7 +483,9 @@ span {
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
+.quizz-page-question {
+    position: relative;
+}
 .quizz-page-question img {
     width: 330px;
     height: 175px;
@@ -559,4 +561,22 @@ button.restart {
 button.go-home {
     background: none;
     color: #818181;
+}
+
+.selected {
+    z-index: 2;
+}
+
+.selection-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 759px;
+    height: 510px;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 1;
+}
+
+p.question-title {
+    z-index: 2;
 }

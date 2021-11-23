@@ -485,6 +485,7 @@ function renderThisQuizz(response) {
             <div>
                 <p class="question-title" id="question${i}">${questionTitle}</p>
                 <div class="quizz-page-answers-box spawn"></div>
+                <div class="selection-overlay hide"></div>
             </div>
         </div>
         `;
@@ -517,6 +518,11 @@ function renderThisQuizz(response) {
 function selectAnswer(selectedAnswer) {
     selectedAnswer.parentNode.style.color = '#FF4B4B';
     selectedAnswer.parentNode.querySelector('#true').style.color = '#009C22';
+
+    //selected answer goes up on z
+    selectedAnswer.classList.add("selected")
+    //add overlay
+    selectedAnswer.parentNode.parentNode.querySelector(".hide").classList.remove("hide");
 }
 
 //SEND QUIZZ
