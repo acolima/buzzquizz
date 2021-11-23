@@ -1,6 +1,12 @@
 let numberOfQuestions = 0;
 let numberOfLevels = 0;
 
+let your_ids_array = JSON.parse(localStorage.getItem("your_ids"));
+
+if(your_ids_array !== null){
+    layoutWithYourQuizzes();
+}
+
 // ♥ SOPHIA ♥ start
 //declarando variaveis para guardar fora das funções os valores que serão enviados
 
@@ -15,6 +21,16 @@ let numberOfLevels = 0;
     let levelsArray = [];       // Array com os níveis
 // ♥ SOPHIA ♥ end
 
+function layoutWithYourQuizzes(){
+        const your_quizzes = document.querySelector(".your-quizzes");
+        your_quizzes.classList.remove("hide");
+    
+        const create_quizz = document.querySelector(".create-quizz");
+        create_quizz.classList.add("hide");
+    
+        const add_circle = document.querySelector(".add-circle");
+        add_circle.classList.remove("hide");
+}
 
 // Passar para a página seguinte
 function nextPage(classPageA, classPageB){
@@ -381,22 +397,40 @@ function getQuizzes() {
     const pAllQuizzes = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
     pAllQuizzes.then(processQuizzes)
 }
+
 function processQuizzes(response){
+    const span_all_quizzes = document.querySelector('.list-all-quizzes');
+    const span_your_quizzes = document.querySelector('.list-your-quizzes');
+    
     const quizzes = response.data;
     const nQuizzes = quizzes.length;
+    let isYourQuizz = false;
+    
     //percorrer lista de quizzes e imprimir a preview de cada um
     for(let i = 0; i < nQuizzes; i++){
-        const image = quizzes[i].image;
+
+        const img = quizzes[i].image;
         const title = quizzes[i].title;
         const id = quizzes[i].id;
-        renderQuizz(image, title, id);
+
+        if(your_ids_array !== null){
+            for(let j = 0; j < your_ids_array.length; j++){
+                if(quizzes[i].id === your_ids_array[j]){
+                    renderQuizz(span_your_quizzes, img, title, id);
+                    isYourQuizz = true;
+                }
+            }
+        }
+        if(!isYourQuizz){
+            renderQuizz(span_all_quizzes, img, title, id);
+        }
+        isYourQuizz = false;
+
     }
-    //pra quizzes do usuario, filtrar. mas isso é um problema pra sophia do futuro.
 }
-const span_all_quizzes = document.querySelector('.list-all-quizzes');
-const span_your_quizzes = document.querySelector('.list-your-quizzes');
-function renderQuizz(img, title, id) {
-    span_all_quizzes.innerHTML +=
+
+function renderQuizz(span, img, title, id) {
+    span.innerHTML +=
     `
     <div class="quizz-preview" id="${id}" onclick="takeThisQuizz(this)">
         <img src="${img}" alt="quizz preview">
@@ -504,7 +538,35 @@ function sendQuizzSuccess(response){
     
     titleSuccess.innerHTML = quizzTitle;
     imageSuccess.style.background = "url(" + quizzURL + ")";
+
+    const promisse = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes');
+    promisse.then(saveIdQuizz);
 }
+
+function saveIdQuizz(response){
+    let your_new_id = response.data[0].id;
+    
+    if(localStorage.getItem("your_ids") === null){    //se não houver nenhum quizz criado:
+        const new_id = "[" + your_new_id + "]";       // -> pega id do novo quizz, coloca em formato de array
+        localStorage.setItem("your_ids", new_id);     // -> armazena
+        your_ids_array = JSON.parse(new_id);          // tranforma em object
+    }
+    else{
+        const your_ids = localStorage.getItem("your_ids");         // pega ids armazenados (string)
+        your_ids_array = JSON.parse(your_ids);                     // transforma em object
+        your_ids_array.push(your_new_id);                          // add novo id
+        const dadosSerializados = JSON.stringify(your_ids_array)   // transforma ele em string novamente
+        localStorage.setItem("your_ids", dadosSerializados)        // armazena dados atualizados
+
+    }
+
+    getQuizzes();
+}
+
+
+//localStorage.removeItem("your_ids")
+// colocar na home atualização
+
 
 function backHome(classPageA, classPageB) {
     // volta para a página home
