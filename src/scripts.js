@@ -500,7 +500,7 @@ function renderThisQuizz(response) {
             
             document.querySelector(".spawn").innerHTML += 
             `
-            <div class="quizz-page-answer">
+            <div class="quizz-page-answer" id="${correctAnswer}" onclick="selectAnswer(this)">
                 <img src='${answerImageURL}' alt="" class="${correctAnswer}">
                 <p><strong>${answerText}</strong></p>
             </div>
@@ -512,6 +512,11 @@ function renderThisQuizz(response) {
             }
         }
     }
+}
+
+function selectAnswer(selectedAnswer) {
+    selectedAnswer.parentNode.style.color = '#FF4B4B';
+    selectedAnswer.parentNode.querySelector('#true').style.color = '#009C22';
 }
 
 //SEND QUIZZ
