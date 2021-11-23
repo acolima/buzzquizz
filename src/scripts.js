@@ -487,10 +487,8 @@ function renderThisQuizz(response) {
             <div>
                 <p class="question-title" id="question${i}">${questionTitle}</p>
                 <div class="quizz-page-answers-box spawn"></div>
-                <div class="selection-overlay hide"></div>
             </div>
-        </div>
-        `;
+        </div>`;
         document.getElementById('question' + i).style.backgroundColor =  questionColor;
 
         //render answers for each question 
@@ -516,19 +514,28 @@ function renderThisQuizz(response) {
         }
     }
 }
+
+function wrongAnswers(questionsAnswers, answer) {
+    let notSelected = questionsAnswers.querySelectorAll("div:not(.selected)")
+
+    for (let i = 0; i < notSelected.length; i++) {
+        const element = notSelected[i];
+        element.classList.add("not-selected")
+    }
+}
+
 let correctCounter = 0;
 let answeredCounter = 0;
 function selectAnswer(selectedAnswer) {
     selectedAnswer.parentNode.style.color = '#FF4B4B';
     selectedAnswer.parentNode.querySelector('#true').style.color = '#009C22';
+    let questionsAnswers = selectedAnswer.parentElement;
 
-    //selected answer goes up on z
-    selectedAnswer.classList.add("selected")
-    //add overlay
-    selectedAnswer.parentNode.parentNode.querySelector(".hide").classList.remove("hide");
-    
     //add to counter
     answeredCounter++;
+    selectedAnswer.classList.add("selected");
+
+    wrongAnswers(questionsAnswers, selectedAnswer);
 
     //contador de respostas corretas
     if(selectedAnswer.id == 'true') {

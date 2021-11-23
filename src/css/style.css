@@ -436,6 +436,7 @@ span {
 }
 
 .banner p {
+    position: relative;
     z-index: 2;
 }
 
@@ -584,4 +585,8 @@ button.go-home {
 
 p.question-title {
     z-index: 2;
+}
+
+.not-selected{
+    opacity: 0.3;
 }
