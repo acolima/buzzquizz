@@ -49,11 +49,23 @@
         <!--Tela 3.1 Info Básica do Quizz-->
         <div class="quizz-info flex-center hide">
             <p>Comece pelo começo</p>
-            <div class="flex-center">
-              <input class="quizz-input quizz-title" type="text" placeholder="Título do seu quizz"/>
-              <input class="quizz-input quizz-url" type="text" placeholder="URL da imagem do seu quizz"/>
-              <input class="quizz-input quizz-num-questions" type="number" placeholder="Quantidade de perguntas do quizz"/>
-              <input class="quizz-input quizz-num-levels" type="number" placeholder="Quantidade de níveis do quizz"/>
+            <div class="quizz-inputs flex-center">
+              <div>
+                <input class="quizz-input quizz-title" type="text" placeholder="Título do seu quizz"/>
+                <p class="quizz-title-error error-message"></p>
+              </div>
+              <div>
+                <input class="quizz-input quizz-url" type="text" placeholder="URL da imagem do seu quizz"/>
+                <p class="quizz-url-error error-message"></p>
+              </div>
+              <div>
+                <input class="quizz-input quizz-num-questions" type="number" placeholder="Quantidade de perguntas do quizz"/>
+                <p class="quizz-num-questions-error error-message"></p>
+              </div>
+              <div>
+                <input class="quizz-input quizz-num-levels" type="number" placeholder="Quantidade de níveis do quizz"/>
+                <p class="quizz-num-levels-error error-message"></p>
+              </div>
             </div>
             <button class="btn-verify-info" onclick="verifyQuizzInfo('.quizz-info', '.quizz-questions')">
               <p>Prosseguir para criar perguntas</p>

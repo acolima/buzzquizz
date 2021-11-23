@@ -97,7 +97,7 @@ main {
 
 /* Tela 3.1 */
 .quizz-info {
-    gap: 27px;
+    gap: 36px;
 }
 
 .quizz-info > p, 
@@ -109,15 +109,20 @@ main {
     color: #000;
 }
 
-.quizz-info div {
+.quizz-inputs {
     width: 600px;
-    height: 256px;
   
     background-color: #fff;
-    
+
     gap: 9px;
 
     margin-bottom: 58px;
+}
+
+.quizz-inputs div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .quizz-input {
@@ -139,7 +144,7 @@ main {
     padding-left: 14px;
 }
   
-.quizz-info input:first-child {
+.quizz-inputs div:first-child {
     margin-top: 21px;
 }
 
@@ -200,13 +205,21 @@ main {
     height: 761px;
 }
 
-.question p,
+h3,
 .level p{
     font-size: 20px;
     font-weight: 700;
     color: #000;
 
     padding: 18px 0 10px 17px;
+}
+
+.error-message {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    color: #ec362d;
 }
 
 /* Tela 3.3 */
@@ -257,7 +270,6 @@ ion-icon {
 .loading-page img{
     width: 250px;
 }
-
 
 /* Tela 3.4 */
 .quizz-success {
@@ -314,6 +326,10 @@ ion-icon {
 
 .hide {
     display: none;
+}
+
+.error{
+    background-color: #ffe9e9;
 }
 
 .your-quizzes {
@@ -411,6 +427,7 @@ span {
     color: #FFFFFF;
     font-size: 39px;
 }
+
 .banner-overlay {
     position: absolute;
     top: 0;
@@ -420,6 +437,7 @@ span {
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.6);
 }
+
 .banner p {
     z-index: 2;
 }
@@ -440,9 +458,11 @@ span {
     height: 676px;
     margin-bottom: 42px;
 }
+
 .quizz-page-question > div {
     width: 688px;
 }
+
 .quizz-page-question > div > p {
     display: flex;
     justify-content: center;
@@ -452,12 +472,12 @@ span {
     background: slategray;
     color: #FFFFFF;
 }
+
 .quizz-page-answers-box {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
 
 .quizz-page-question img {
     width: 330px;

@@ -52,6 +52,22 @@ function verifyHexadecimal(color){
     else return false;
 }
 
+function showError(classInput, classError, errorMessage) {
+    const input = document.querySelector(classInput);
+    const error = document.querySelector(classError);
+  
+    input.classList.add("error");
+    error.innerHTML = errorMessage;
+}
+  
+function hideError(classInput, classError, errorMessage) {
+    const input = document.querySelector(classInput);
+    const error = document.querySelector(classError);
+  
+    input.classList.remove("error");
+    error.innerHTML = errorMessage;
+}
+
 // Verifica as informações do quiz
 function verifyQuizzInfo(classPageA, classPageB){
     const quizzTitleInput = document.querySelector(".quizz-title").value;
@@ -61,17 +77,29 @@ function verifyQuizzInfo(classPageA, classPageB){
     let control = 0;
 
     if(quizzTitleInput.length < 20 || quizzTitleInput.length > 65)
-        alert("Título do Quizz deve ter entre 20 e 65 caracteres");   
-    else control++;
+        showError(".quizz-title", ".quizz-title-error", "Título do quizz deve ter entre 20 e 65 caracteres");
+    else{
+        hideError(".quizz-title", ".quizz-title-error", "");
+        control++;
+    }
     if(!verifyURL(quizzURLInput))
-        alert("Formato de URL inválido");   
-    else control++;
+        showError(".quizz-url", ".quizz-url-error", "Formato de URL inválido");
+    else{
+        hideError(".quizz-url", ".quizz-url-error", "");
+        control++;
+    }
     if(numberOfQuestions < 3 )
-        alert("São necessárias no mínimo 3 perguntas");   
-    else control++;
+        showError(".quizz-num-questions", ".quizz-num-questions-error", "São necessárias no mínimo 3 perguntas");
+    else{
+        hideError(".quizz-num-questions", ".quizz-num-questions-error", "");
+        control++;
+    }
     if(numberOfLevels < 2)
-        alert("São necessários no mínimo 2 níveis");   
-    else control++;
+        showError(".quizz-num-levels", ".quizz-num-levels-error", "São necessários no mínimo 2 níveis");
+    else{
+        hideError(".quizz-num-levels", ".quizz-num-levels-error", "");
+        control++;
+    }
 
     quizzTitle = quizzTitleInput;
     quizzURL = quizzURLInput;
@@ -94,14 +122,14 @@ function createQuestions(){
 
     questionsDiv.innerHTML += `
         <div class="question" style="height: 825px">
-            <p>Pergunta 1</p>
+            <h3>Pergunta 1</h3>
             <div class="question-input" style="padding-top: 20px">
                 <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
                 <input class="quizz-input question-color" type="text" placeholder="Cor de fundo da pergunta"/>
-                <p>Resposta correta</p>
+                <h3>Resposta correta</h3>
                 <input class="quizz-input correct-answer-text" type="text" placeholder="Resposta correta"/>
                 <input class="quizz-input correct-answer-img" type="text" placeholder="URL da imagem"/>
-                <p>Respostas incorreta</p>
+                <h3>Respostas incorreta</h3>
                 <div class="incorrect-answers">
                     <div>
                         <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
@@ -124,16 +152,16 @@ function createQuestions(){
         questionsDiv.innerHTML += `
             <div class="question">
                 <div class="question-header">
-                    <p>Pergunta ${i}</p>
+                    <h3>Pergunta ${i}</h3>
                     <ion-icon name="create-outline" onclick="editQuestion(this, '.question-input', 'edit-question')"></ion-icon>
                 </div>
                 <div class="question-input hide">
                     <input class="quizz-input question-title" type="text" placeholder="Texto da pergunta"/>
                     <input class="quizz-input question-color" type="text" placeholder="Cor de fundo da pergunta"/>
-                    <p>Resposta correta</p>
+                    <h3>Resposta correta</h3>
                     <input class="quizz-input correct-answer-text" type="text" placeholder="Resposta correta"/>
                     <input class="quizz-input correct-answer-img" type="text" placeholder="URL da imagem"/>
-                    <p>Respostas incorreta</p>
+                    <h3>Respostas incorreta</h3>
                     <div class="incorrect-answers">
                         <div>
                             <input class="quizz-input" type="text" placeholder="Resposta incorreta 1"/>
@@ -228,16 +256,16 @@ function verifyQuestion(question) {
         alert("Pergunta deve conter no mínimo 20 caracteres");
     }
     else if(!verifyHexadecimal(questionColor)){
-        alert("A cor deve ser escrita em formato hexadecimal");
+        alert("Formato de cor inválido (deve ser hexadecimal)");
     }
     else if(correctAnswerText === ""){
-        alert("Preencha o campo da Resposta Correta");
+        alert("Campo resposta correta não pode ser vazio");
     }
     else if(!verifyURL(correctAnswerImg)){
-        alert("Url inválida");
+        alert("Formato de URL inválido");
     }
     else if(numberOfIncorrectAnswers === 0){
-        alert("Preencha o campo das respostas incorretas");
+        alert("Pelo menos uma resposta incorreta deve ser preenchida");
     }
     else{
         objectQuestion = {
@@ -326,7 +354,7 @@ function verifyLevel(level) {
         alert("Porcentagem com número inválido");
     }
     else if(!verifyURL(levelUrl)){
-        alert("Digite uma URL válida");
+        alert("Formato de URL inválido");
     }
     else if(levelDescription.length < 30){
         alert("Descrição do nível deve conter, no mínimo, 30 caracteres");
