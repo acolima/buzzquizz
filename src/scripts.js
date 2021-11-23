@@ -453,7 +453,6 @@ function takeThisQuizz(quizz) {
 }
 let thisQuizzLevels = [];
 let nThisQuizzQuestions = 0;
-let thisQuestionIdNumber = 0;
 function renderThisQuizz(response) {
     let quizz = response.data;
     let questions = quizz.questions;
@@ -528,6 +527,10 @@ function wrongAnswers(questionsAnswers, answer) {
 let correctCounter = 0;
 let answeredCounter = 0;
 function selectAnswer(selectedAnswer) {
+    //quick fix for the scrollIntoView:
+        //use answeredCounter as id for querySelector
+        //(will only work if user answers questions in order)
+
     selectedAnswer.parentNode.style.color = '#FF4B4B';
     selectedAnswer.parentNode.querySelector('#true').style.color = '#009C22';
     let questionsAnswers = selectedAnswer.parentElement;
@@ -547,9 +550,14 @@ function selectAnswer(selectedAnswer) {
             quizzResult(nThisQuizzQuestions, correctCounter, thisQuizzLevels)
           }, 2000)
     } else {
-        let nextQuestionIdNumber = thisQuestionIdNumber + 1;
+        //SOLUÇÃO ABRANGENTE INCOMPLETA (START)
+        //let answersBox = selectedAnswer.parentNode;
+        //let questionDiv = answersBox.parentNode;
+        //thisID = questionDiv.querySelector(".question-title").id;
+        //let nextID = thisID + 1;
+        //SOLUÇÃO ABRANGENTE INCOMPLETA (END)
         setTimeout(() => {
-            document.querySelector(`#question${nextQuestionIdNumber}`).scrollIntoView
+            document.querySelector(`#question${answeredCounter}`).scrollIntoView({behavior: "smooth"})
         }, 2000)
     }
 }
@@ -675,7 +683,14 @@ function restartQuizz() {
     window.scrollTo(0, 0);
 
     //reset answers
+        //change color back
+        document.querySelectorAll(".quizz-page-answer p").style.color = "#000000";
         
+        //remove class selected
+        document.querySelectorAll(".selected").classList.remove("selected");
+
+        //hide overlay
+        document.querySelectorAll(".selection-overlay").classList.add("hide");
 
     //hide result box
     document.querySelector(".quizz-page-result").classList.add("hide");
